@@ -409,6 +409,7 @@
 				757A5E561A02EFF700AD1DF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		757A5E571A02EFF700AD1DF6 /* Build configuration list for PBXNativeTarget "MASSIVETests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +418,7 @@
 				757A5E591A02EFF700AD1DF6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
