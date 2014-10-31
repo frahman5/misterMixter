@@ -52,8 +52,11 @@ class PlaylistTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        // Create a new view that will have the playing page
+        
+        
+        // Pass that view to the scHandler
         scHandler.playPlaylist(indexPath.row)
-        println("row selected")
     }
 
     /*

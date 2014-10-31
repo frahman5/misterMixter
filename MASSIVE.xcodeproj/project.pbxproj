@@ -17,6 +17,7 @@
 		757A5E451A02EFF700AD1DF6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 757A5E431A02EFF700AD1DF6 /* LaunchScreen.xib */; };
 		757A5E511A02EFF700AD1DF6 /* MASSIVETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757A5E501A02EFF700AD1DF6 /* MASSIVETests.swift */; };
 		757A5E601A02F8A900AD1DF6 /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757A5E5F1A02F8A900AD1DF6 /* PlaylistTableViewController.swift */; };
+		75A883501A03564D00D8E3F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A8834F1A03564D00D8E3F0 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +47,7 @@
 		757A5E4F1A02EFF700AD1DF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		757A5E501A02EFF700AD1DF6 /* MASSIVETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASSIVETests.swift; sourceTree = "<group>"; };
 		757A5E5F1A02F8A900AD1DF6 /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
+		75A8834F1A03564D00D8E3F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		8660081DD1A7899E672F72EB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E799D83537592F39A4DB79E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75A883501A03564D00D8E3F0 /* AVFoundation.framework in Frameworks */,
 				66383A758C8DA5462178D197 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -81,6 +84,7 @@
 		4F6F6487CA165A87C0F290B1 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				75A8834F1A03564D00D8E3F0 /* AVFoundation.framework */,
 				8660081DD1A7899E672F72EB /* libPods.a */,
 			);
 			name = Frameworks;
