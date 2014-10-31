@@ -12,15 +12,19 @@ import CoreLocation
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
-    // Scroll-y view for user locations and the associated data structure
+    // Scroll-y view for user locations and the associated data structures
     @IBOutlet var userLocations: UIPickerView!
     var userLocationsArray: Array<String>!
+    var foundLocation: Bool?
     
     // location manager to find user location
     let locationManager = CLLocationManager()
     
     // TableViewController
     let playlistTVC = PlaylistTableViewController()
+    
+    // SoundCloudHandler
+    let scHandler = SoundCloudHandler()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -32,15 +36,19 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
         // Ask for location permission and once received, determine location
         locationManager.requestWhenInUseAuthorization()
-        println("Ran viewDidLoad")
-        var timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self,
-            selector: Selector("findMyLocation"), userInfo: nil, repeats: true)
         
-        // change to using CGRect
+        while (self.foundLocation == nil) {
+            self.findMyLocation()
+        }
+
+        
+        // Place tableView of playlists up
         let playlistViewBounds = CGRectMake(0, 268, 320, 251)
         self.playlistTVC.view.frame = playlistViewBounds
-        
         self.view.addSubview(self.playlistTVC.view)
+        
+        // Tell me you ran
+        println("Ran viewDidLoad")
         
         
         
@@ -64,7 +72,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         geoCoder.reverseGeocodeLocation(locationManager.location,
             completionHandler: { (placemarks, error) -> Void in
                 
-                println("Ran reverse Geo Code")
                 // handle error if need be
                 if (error != nil) {
                     println("Geocoder failed with error code" + error.localizedDescription)
@@ -85,6 +92,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
                     println("Problem with the data received from geocoder")
                 }
         })
+        
+        // Indicate that we've found location
+        self.foundLocation = true
+        
+        // Fetch playlists
+        self.scHandler.fetchPlaylistsForLocation("Location")
+        
     }
     
     // The number of columns of data

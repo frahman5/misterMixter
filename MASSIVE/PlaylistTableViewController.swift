@@ -46,7 +46,7 @@ class PlaylistTableViewController: UITableViewController {
         switch indexPath.row {
             
         case 0:
-            cell!.textLabel!.text = "Item 1"
+            cell!.textLabel!.text = "Test Playlist"
         case 1:
             cell!.textLabel!.text = "Item 2"
         case 2:
@@ -56,6 +56,10 @@ class PlaylistTableViewController: UITableViewController {
         }
         
         return cell as UITableViewCell!
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        println("row selected")
     }
 
     /*

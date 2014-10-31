@@ -15,6 +15,12 @@
 
 @implementation SoundCloudHandler
 
+- (NSString *)fetchPlaylistsForLocation:(NSString *)location {
+    NSLog(@"fetched playlist");
+    
+    return @"this function got called!";
+}
+
 - (void) initializeSoundCloud {
     [SCSoundCloud setClientID:@"7e4a3481d659fbcd9667741811dfa4ee"
                        secret:@"ad15980c012fd968f0e33784e25b4551"

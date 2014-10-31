@@ -10,5 +10,6 @@
 #import <UIKit/UIKit.h>
 
 @interface SoundCloudHandler : NSObject
+- (NSString *)fetchPlaylistsForLocation:(NSString *)location;
 
 @end
