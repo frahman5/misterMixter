@@ -5,8 +5,10 @@
 //  Created by Faiyam Rahman on 10/30/14.
 //  Copyright (c) 2014 CornellTech. All rights reserved.
 //
+
 import UIKit
 import CoreLocation
+
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -16,6 +18,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     // location manager to find user location
     let locationManager = CLLocationManager()
+    
+    // TableViewController
+    let playlistTVC = PlaylistTableViewController()
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -30,6 +35,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         println("Ran viewDidLoad")
         var timer = NSTimer.scheduledTimerWithTimeInterval(0.4, target: self,
             selector: Selector("findMyLocation"), userInfo: nil, repeats: true)
+        
+        // change to using CGRect
+        let playlistViewBounds = CGRectMake(0, 268, 320, 251)
+        self.playlistTVC.view.frame = playlistViewBounds
+        
+        self.view.addSubview(self.playlistTVC.view)
+        
+        
         
     }
     
