@@ -12,8 +12,10 @@
 
 @interface SoundCloudHandler : NSObject
 - (NSString *)fetchPlaylistsForLocation:(NSString *)location;
-- (void)playPlaylist:(NSInteger) whichPlaylist;
+- (void) playPlaylist:(NSInteger) whichPlaylist;
 - (void) setViewController:(UIViewController *) viewController;
 - (void) pause;
+- (void) nextSong;
+- (void) previousSong;
 
 @end

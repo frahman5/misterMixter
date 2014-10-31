@@ -11,7 +11,21 @@ import UIKit
 class PlayPageViewController: UIViewController {
     
     var scHandler: SoundCloudHandler!
+    @IBOutlet var songTitle: UILabel!
     
+    @IBAction func nextSong(sender: AnyObject) {
+        self.scHandler.nextSong()
+    }
+    
+    @IBAction func previousSong(sender: AnyObject) {
+        self.scHandler.previousSong()
+    }
+    
+    let pauseImage: UIImage = UIImage(contentsOfFile: "pause.png")
+//    let pauseImage: UIImage = UIImage(named: "pause.png")
+    let playImage: UIImage = UIImage(named: "play.png")
+    
+    @IBOutlet var playPauseButton: UIButton!
     convenience init(scHandler: SoundCloudHandler) {
         println("ran custom init")
         self.init()
@@ -19,32 +33,34 @@ class PlayPageViewController: UIViewController {
         println("@self.schandler: \(self.scHandler)")
 
     }
-
-//    required init(coder: NSCoder) {
-//        super.init(coder: coder)
-//    }
-//    
-    //Code to be removed from your destinationViewController
-//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//        // Here you can init your properties
-//    }
     
     @IBAction func pause(sender: AnyObject) {
         // send soundCloundHandler the message to pause
+        self.playPauseButton.setImage(self.playImage, forState: UIControlState.Normal)
         self.scHandler!.pause()
     }
-
-    @IBOutlet var songTitle: UILabel!
+    
     
     func setSongTitle(songTitle: NSString) {
+        println("song title: %@", songTitle)
         self.songTitle.text = songTitle
+//        self.songTitle.text = songTitle
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.playPauseButton.setImage(self.pauseImage, forState:UIControlState.Normal)
         println("We opened the right view controller")
         
+        // set up gesture recognizers
+            // Right swipe plays the next song
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: "nextSong:")
+        rightSwipe.direction = UISwipeGestureRecognizerDirection.Right
+        view.addGestureRecognizer(rightSwipe)
+            // Left swipe plays the previous song
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: "previousSong:")
+        leftSwipe.direction = UISwipeGestureRecognizerDirection.Left
+        view.addGestureRecognizer(leftSwipe)
         
 
         // Do any additional setup after loading the view.

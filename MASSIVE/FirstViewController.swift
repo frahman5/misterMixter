@@ -27,12 +27,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     let scHandler = SoundCloudHandler()
     
     @IBAction func testAction(sender: AnyObject) {
-//        let playPageViewController = PlayPageViewController(scHandler: self.scHandler)
-//        self.scHandler.setViewController(playPageViewController)
 
         self.scHandler.playPlaylist(0)
-//        self.presentViewController(playPageViewController, animated: true, completion: nil)
-
         println("change page1")
     }
     required init(coder aDecoder: NSCoder) {
@@ -42,7 +38,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
 
         
         // Ask for location permission and once received, determine location
@@ -137,10 +133,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
         println("prepare for segue")
         
-        
-        let viewController:PlayPageViewController = segue!.destinationViewController as PlayPageViewController
-        viewController.scHandler = self.scHandler
-        self.scHandler.setViewController(viewController)
+        println("sender: %@", sender)
+  
+        if (segue?.identifier == "goToPlayPage") {
+            let viewController:PlayPageViewController = segue!.destinationViewController as PlayPageViewController
+            assert(sender != nil)
+            assert(segue != nil)
+            //        assert(viewController as Bool)
+            self.scHandler.setViewController(viewController)
+        }
+
         
     }
 }

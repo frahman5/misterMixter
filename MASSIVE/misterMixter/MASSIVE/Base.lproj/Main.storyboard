@@ -31,7 +31,7 @@
                                 </state>
                                 <connections>
                                     <action selector="testAction:" destination="9pv-A4-QxB" eventType="touchUpInside" id="cUp-fW-N9p"/>
-                                    <segue destination="4m5-dH-j9m" kind="modal" id="XuT-6C-GhG"/>
+                                    <segue destination="4m5-dH-j9m" kind="modal" identifier="goToPlayPage" id="XuT-6C-GhG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -54,13 +54,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lyJ-xA-7Yu">
-                                <rect key="frame" x="108" y="280" width="105" height="94"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="pause.png">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Song Title is:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZTQ-gC-Kfu">
                                 <rect key="frame" x="79" y="55" width="162" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -75,14 +68,14 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="xye-dM-eWc">
-                                <rect key="frame" x="108" y="280" width="105" height="94"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DMz-Mp-Ngb">
+                                <rect key="frame" x="98" y="220" width="125" height="102"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button" image="pause.png">
+                                <state key="normal" title="?">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="pause:" destination="4m5-dH-j9m" eventType="touchUpInside" id="Aaq-gu-8Lg"/>
+                                    <action selector="pause:" destination="4m5-dH-j9m" eventType="touchUpInside" id="6VO-bt-mhJ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -90,6 +83,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="MWo-YY-5oG"/>
                     <connections>
+                        <outlet property="playPauseButton" destination="DMz-Mp-Ngb" id="XBe-kc-MhL"/>
                         <outlet property="songTitle" destination="dWg-q1-29z" id="x1f-qT-IrR"/>
                     </connections>
                 </viewController>
@@ -151,7 +145,6 @@
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
-        <image name="pause.png" width="128" height="128"/>
         <image name="second" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
