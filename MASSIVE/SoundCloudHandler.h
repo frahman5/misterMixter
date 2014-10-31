@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+
 @interface SoundCloudHandler : NSObject
 - (NSString *)fetchPlaylistsForLocation:(NSString *)location;
 - (void)playPlaylist:(NSInteger) whichPlaylist;
+- (void) setViewController:(UIViewController *) viewController;
+- (void) pause;
 
 @end

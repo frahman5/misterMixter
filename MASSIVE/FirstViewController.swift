@@ -20,12 +20,21 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     // location manager to find user location
     let locationManager = CLLocationManager()
     
-    // TableViewController
+    // TableViewController to list playlists
     let playlistTVC = PlaylistTableViewController()
     
     // SoundCloudHandler
     let scHandler = SoundCloudHandler()
     
+    @IBAction func testAction(sender: AnyObject) {
+//        let playPageViewController = PlayPageViewController(scHandler: self.scHandler)
+//        self.scHandler.setViewController(playPageViewController)
+
+        self.scHandler.playPlaylist(0)
+//        self.presentViewController(playPageViewController, animated: true, completion: nil)
+
+        println("change page1")
+    }
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -34,12 +43,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Ask for location permission and once received, determine location
-        locationManager.requestWhenInUseAuthorization()
+
         
-        while (self.foundLocation == nil) {
-            self.findMyLocation()
-        }
+        // Ask for location permission and once received, determine location
+        
+        
+//        while (self.foundLocation == nil) {
+//            locationManager.requestWhenInUseAuthorization()
+//            self.findMyLocation()
+//        }
 
         
         // Place tableView of playlists up
@@ -121,23 +133,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         // Dispose of any resources that can be recreated.
     }
     
-    @IBOutlet var playlistRequested: UIButton!
     
-//    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-//        println("prepare for segue")
-//        
-//        let viewController:SongViewController = segue!.destinationViewController as SongViewController
-//        if (segue!.identifier == "playlist1") {
-//            viewController.whichButtonPressed = 1
-//        } else if (segue!.identifier == "playlist2") {
-//            viewController.whichButtonPressed = 2
-//        } else if (segue!.identifier == "playlist3") {
-//            viewController.whichButtonPressed = 3
-//        }
-//        
-//        // Get the new view controller using segue.destinationViewController.
-//        // Pass the selected object to the new view controller.
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
+        println("prepare for segue")
+        
+        
+        let viewController:PlayPageViewController = segue!.destinationViewController as PlayPageViewController
+        viewController.scHandler = self.scHandler
+        self.scHandler.setViewController(viewController)
+        
+    }
 }
 
 

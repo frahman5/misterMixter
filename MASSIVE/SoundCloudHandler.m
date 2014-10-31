@@ -9,6 +9,7 @@
 #import "SoundCloudHandler.h"
 #import "SCUI.h"
 #import <AVFoundation/AVFoundation.h>
+#import "MASSIVE-Swift.h"
 
 @interface SoundCloudHandler ()
 
@@ -19,6 +20,8 @@
 // the guy who'll play our songs!
 @property (nonatomic, strong) AVAudioPlayer *player;
 
+// the view controller that communicates song data to the view
+@property (nonatomic, strong) PlayPageViewController *ppvC;
 
 - (void)playTracks:(NSArray *) tracksArray;
 /* NSArrayOfNSDictionarys -> Nil
@@ -31,16 +34,28 @@
 
 - (void) playTrack:(NSString *)streamURL;
 
+
+
 @end
 
 @implementation SoundCloudHandler
 
+- (void) setViewController:(UIViewController *)viewController{
+    self.ppvC = (PlayPageViewController *)viewController;
+}
 -(id)init {
+    
+    // set soundcloud specific constants
     NSLog(@"running init code");
     self.clientID = @"7e4a3481d659fbcd9667741811dfa4ee";
     self.secret = @"ad15980c012fd968f0e33784e25b4551";
+
     
     return self;
+}
+
+- (void) pause {
+    [self.player pause];
 }
 
 - (void) playTrack:(NSString *)streamURL {
@@ -65,17 +80,16 @@
                  withAccount:nil
       sendingProgressHandler:nil
              responseHandler:handler];
+    
+    // update viewController
+    self.ppvC.songTitle.text = @"yo mama!";
+    
 }
 - (void)playTracks:(NSArray *) tracksArray {
     
     NSString *trackURL = [NSString stringWithFormat:@"%@?client_id=%@", [tracksArray[0] objectForKey:@"stream_url" ], self.clientID];
     [self playTrack:trackURL];
-//    for (NSDictionary *trackDict in tracksArray) {
-//        NSString *trackURL = [NSString stringWithFormat:@"%@.json?client_id=%@", [trackDict objectForKey:@"stream_url" ], self.clientID];
-//        
-//        [self playTrack:trackURL];
-    
-//    }
+
 }
 
 - (NSString *)fetchPlaylistsForLocation:(NSString *)location {
