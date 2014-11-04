@@ -55,6 +55,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         self.playlistTVC.view.frame = playlistViewBounds
         self.view.addSubview(self.playlistTVC.view)
         
+        // Get rid of this when you get less fake
+        self.userLocationsArray = ["Cornell Tech", "Chelsea", "New York"]
+        self.userLocations.dataSource = self
+        self.userLocations.delegate = self
+        
         // Tell me you ran
         println("Ran viewDidLoad")
         
@@ -135,11 +140,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
         println("sender: %@", sender)
   
-        if (segue?.identifier == "goToPlayPage") {
+        if segue?.identifier == "goToPlayerVC" {
+            let viewController:playerVC = segue!.destinationViewController as playerVC
+            viewController.scHandler = self.scHandler
+            self.scHandler.setViewController(viewController)
+        } else {
+            assert (segue?.identifier == "goToPlayPage")
             let viewController:PlayPageViewController = segue!.destinationViewController as PlayPageViewController
-            assert(sender != nil)
-            assert(segue != nil)
-            //        assert(viewController as Bool)
+            viewController.scHandler = self.scHandler
             self.scHandler.setViewController(viewController)
         }
 

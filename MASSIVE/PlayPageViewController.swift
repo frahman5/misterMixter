@@ -11,6 +11,7 @@ import UIKit
 class PlayPageViewController: UIViewController {
     
     var scHandler: SoundCloudHandler!
+    
     @IBOutlet var songTitle: UILabel!
     
     @IBAction func nextSong(sender: AnyObject) {
@@ -26,13 +27,13 @@ class PlayPageViewController: UIViewController {
     let playImage: UIImage = UIImage(named: "play.png")
     
     @IBOutlet var playPauseButton: UIButton!
-    convenience init(scHandler: SoundCloudHandler) {
-        println("ran custom init")
-        self.init()
-        self.scHandler = scHandler
-        println("@self.schandler: \(self.scHandler)")
-
-    }
+//    convenience init(scHandler: SoundCloudHandler) {
+//        println("ran custom init")
+//        self.init()
+//        self.scHandler = scHandler
+//        println("@self.schandler: \(self.scHandler)")
+//
+//    }
     
     @IBAction func pause(sender: AnyObject) {
         // send soundCloundHandler the message to pause

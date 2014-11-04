@@ -27,6 +27,9 @@
 // the view controller that communicates song data to the view
 @property (nonatomic, strong) PlayPageViewController *ppvC;
 
+
+
+
 - (void)playTracks:(NSArray *) tracksArray;
 /*
  Given a tracks array of dictionaries of that correspond to json encodings
@@ -177,7 +180,8 @@
     };
 
     // Ping the api for the desired playlist
-    NSString *resourceURL = @"https://api.soundcloud.com/playlists/53537234.json?client_id=7e4a3481d659fbcd9667741811dfa4ee";
+    NSString *resourceURL = [NSString stringWithFormat:@"https://api.soundcloud.com/playlists/53537234.json?client_id=%@", self.clientID ];
+    NSLog(@"resource URL: %@", resourceURL);
     [SCRequest performMethod:SCRequestMethodGET
                   onResource:[NSURL URLWithString:resourceURL]
              usingParameters:nil

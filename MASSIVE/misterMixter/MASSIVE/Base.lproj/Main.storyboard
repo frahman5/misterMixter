@@ -24,7 +24,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oKF-HX-vgd">
-                                <rect key="frame" x="137" y="245" width="46" height="30"/>
+                                <rect key="frame" x="86" y="244" width="46" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Button">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -32,6 +32,16 @@
                                 <connections>
                                     <action selector="testAction:" destination="9pv-A4-QxB" eventType="touchUpInside" id="cUp-fW-N9p"/>
                                     <segue destination="4m5-dH-j9m" kind="modal" identifier="goToPlayPage" id="XuT-6C-GhG"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6lc-6W-7Yx">
+                                <rect key="frame" x="163" y="244" width="81" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="ButtonToAV">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="RjQ-Wg-SQh" kind="modal" identifier="goToPlayerVC" id="WJo-GF-FKa"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -90,6 +100,16 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqt-YZ-HhL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="800" y="-267"/>
+        </scene>
+        <!--AV Player View Controller-->
+        <scene sceneID="lfD-L7-t6s">
+            <objects>
+                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="RjQ-Wg-SQh" customClass="playerVC" customModule="MASSIVE" customModuleProvider="target" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Hay-VS-fq3"/>
+                </avPlayerViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RsA-0w-3Bm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="963" y="-321"/>
         </scene>
         <!--Second-->
         <scene sceneID="wg7-f3-ORb">
