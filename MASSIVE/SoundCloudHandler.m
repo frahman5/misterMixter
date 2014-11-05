@@ -19,42 +19,31 @@
 @property (nonatomic, strong) NSString *redirectURI;
 
 // the guy who'll play our songs, and his companion data function
-@property (nonatomic, strong) AVAudioPlayer *player;
+@property (nonatomic, strong) AVPlayer *player;
     // each element is (streamURL, trackTitle)
 @property (nonatomic, strong) NSMutableArray *tracksRelevantInfoArray;
 @property (nonatomic) NSUInteger trackIndex;
+@property (nonatomic, strong) NSArray *tracks;
 
 // the view controller that communicates song data to the view
-@property (nonatomic, strong) PlayPageViewController *ppvC;
+@property (nonatomic, strong) playerVC *ppvC;
 
 
+- (void)setTracksArray;
 
-
-- (void)playTracks:(NSArray *) tracksArray;
-/*
- Given a tracks array of dictionaries of that correspond to json encodings
- of track info from the soundcloud api, opens the play page and starts 
- playing the playlist from track 0
- */
-
-- (void) playTrack:(NSArray *)trackInfo;
-/*
- Given an array of format (stream_url, title, etc), play the song
- and display relevant information!
- */
-
-- (void) stop;
 @end
 
 @implementation SoundCloudHandler
 
 - (void) setViewController:(UIViewController *)viewController{
-    self.ppvC = (PlayPageViewController *)viewController;
+    self.ppvC = (playerVC *)viewController;
 }
+
 -(id)init {
     
     // set soundcloud specific constants
     NSLog(@"running init code");
+    
     // IMAXMassive
 //    self.clientID = @"7e4a3481d659fbcd9667741811dfa4ee";
 //    self.secret = @"ad15980c012fd968f0e33784e25b4551";
@@ -68,67 +57,61 @@
     return self;
 }
 
-- (void) pause {
-    [self.player pause];
-    
-}
-- (void) stop {
-    [self.player stop];
-}
 
-- (void) nextSong {
-    if (self.trackIndex <= self.tracksRelevantInfoArray.count) {
-        [self stop];
-        
-        self.trackIndex += 1;
-        [self playTrack:self.tracksRelevantInfoArray[self.trackIndex]];
-    }
-    else {
-        [self stop];
-    }
 
-}
-- (void) previousSong {
-    if (self.trackIndex > 0) {
-        self.trackIndex -= 1;
-        [self playTrack:self.tracksRelevantInfoArray[self.trackIndex]];
-    }
+- (void)setTracksArray {
+    NSLog(@"Ran setTracksArray");
     
-}
-
-- (void) playTrack:(NSArray *)trackInfo {
-    NSString *streamURL = trackInfo[0];
-    NSLog(@"playing track: %@", streamURL);
-    // tell our view controller what we are playing
-    self.ppvC.songTitle.text = trackInfo[1];
+    [self initializeSoundCloud];
     
-    // make a request handler to read in json response
+    // Create a request handler to receive the json response
     SCRequestResponseHandler handler;
-    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        //play the audio file
-        NSError *playerError;
-        self.player = [[AVAudioPlayer alloc] initWithData:data error:&playerError];
-        NSLog(@"playerError: %@", [playerError localizedDescription ]);
-        [self.player prepareToPlay];
-        [self.player play];
-    };
     
+//    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+//        
+//        assert(data != nil);
+//        NSLog(@"We entered handler code");
+//        NSError *jsonError = nil;
+//        NSJSONSerialization *jsonResponse = [NSJSONSerialization
+//                                             JSONObjectWithData:data
+//                                             options:0
+//                                             error:&jsonError];
+//        
+//        if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
+//            NSLog(@"succesffuly retrieved playlist");
+//            
+//            
+//            self.tracks = [(NSDictionary *)jsonResponse objectForKey:@"tracks"];
+//            
+//        }
+//        else {
+//            NSLog(@"something didn't work");
+//            NSLog(@"%@", [jsonError localizedDescription]);
+//        }
+//    };
     
-    // get the song
+    // Ping the api for the desired playlist
+    NSString *resourceURL = [NSString stringWithFormat:@"https://api.soundcloud.com/playlists/53537234.json?client_id=%@", self.clientID ];
+    NSURL *resource = [[NSURL alloc] initWithString:resourceURL];
+    NSLog(@"%@", resource);
+    NSLog(@"resource URL: %@", resourceURL);
     [SCRequest performMethod:SCRequestMethodGET
-                  onResource:[NSURL URLWithString:streamURL]
+                  onResource:resource
              usingParameters:nil
                  withAccount:nil
       sendingProgressHandler:nil
              responseHandler:handler];
     
+    
 }
-- (void)playTracks:(NSArray *) tracksArray {
-    self.tracksRelevantInfoArray = [[NSMutableArray alloc] init];
+- (AVPlayer *)getAVPlayer {
+    
+    // extract playlist info from soundcloud
+    [self setTracksArray];
     
     // Collect all the tracks into one array
-    for (NSDictionary *trackDict in tracksArray) {
+    self.tracksRelevantInfoArray = [[NSMutableArray alloc] init];
+    for (NSDictionary *trackDict in self.tracks) {
         NSString *streamUrl = [NSString stringWithFormat:@"%@?client_id=%@", [trackDict objectForKey:@"stream_url" ], self.clientID];
         NSString *title = [NSString stringWithFormat:@"%@", [trackDict objectForKey:@"title"]];
         NSArray *relevantInfos = @[streamUrl, title];
@@ -138,10 +121,26 @@
         
     }
     
-    self.trackIndex = 0;
-    [self playTrack:self.tracksRelevantInfoArray[self.trackIndex]];
-
+    // get the track info
+    NSString *streamURL = self.tracksRelevantInfoArray[0];
+    NSLog(@"playing track: %@", streamURL);
+    
+    // make a request handler to read in json response
+    SCRequestResponseHandler handler;
+    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        
+        // set the player
+        NSError *playerError;
+        self.player = [[AVPlayer alloc] initWithURL:[[NSURL alloc] initWithString: streamURL]];
+//        self.player = [[AVPlayer alloc] initWithData:data error:&playerError];
+        NSLog(@"playerError: %@", [playerError localizedDescription ]);
+    };
+    
+    // return the player
+    return self.player;
 }
+
+
 
 - (NSString *)fetchPlaylistsForLocation:(NSString *)location {
     NSLog(@"fetched playlist");
@@ -149,48 +148,6 @@
     return @"this function got called!";
 }
 
-- (void)playPlaylist:(NSInteger) whichPlaylist {
-    [self initializeSoundCloud];
-
-    // open up a new page
-    
-    
-    // Create a request handler to receive the json response
-    SCRequestResponseHandler handler;
-    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        assert(data != nil);
-        NSError *jsonError = nil;
-        NSJSONSerialization *jsonResponse = [NSJSONSerialization
-                                             JSONObjectWithData:data
-                                             options:0
-                                             error:&jsonError];
-        
-        if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"succesffuly retrieved playlist");
-            
-            NSArray *tracks = [(NSDictionary *)jsonResponse objectForKey:@"tracks"];
-            [self playTracks:tracks];
-            
-        }
-        else {
-            NSLog(@"something didn't work");
-            NSLog(@"%@", [jsonError localizedDescription]);
-        }
-    };
-
-    // Ping the api for the desired playlist
-    NSString *resourceURL = [NSString stringWithFormat:@"https://api.soundcloud.com/playlists/53537234.json?client_id=%@", self.clientID ];
-    NSLog(@"resource URL: %@", resourceURL);
-    [SCRequest performMethod:SCRequestMethodGET
-                  onResource:[NSURL URLWithString:resourceURL]
-             usingParameters:nil
-                 withAccount:nil
-      sendingProgressHandler:nil
-             responseHandler:handler];
-    
-    
-}
 - (void) initializeSoundCloud {
     NSLog(@"self.clientID: %@", self.clientID);
     NSLog(@"self.secret: %@", self.secret);

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 
 @interface SoundCloudHandler : NSObject
@@ -17,5 +18,8 @@
 - (void) pause;
 - (void) nextSong;
 - (void) previousSong;
+
+// create a player object for playerVC
+- (AVPlayer *)getAVPlayer;
 
 @end

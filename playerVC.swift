@@ -8,15 +8,20 @@
 
 import UIKit
 import AVKit
+import AVFoundation
 
 class playerVC: AVPlayerViewController {
     
+    // the model that handles soundcloud api calls
     var scHandler: SoundCloudHandler!
+    
+    // the player that contains all our song info
+//    var player: AVPlayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.
+        self.player = self.scHandler.getAVPlayer()
 
         // Do any additional setup after loading the view.
     }
