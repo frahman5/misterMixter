@@ -28,7 +28,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     @IBAction func testAction(sender: AnyObject) {
 
-        self.scHandler.playPlaylist(0)
+        self.scHandler.getAVPlayer()
         println("change page1")
     }
     required init(coder aDecoder: NSCoder) {

@@ -31,7 +31,7 @@
                                 </state>
                                 <connections>
                                     <action selector="testAction:" destination="9pv-A4-QxB" eventType="touchUpInside" id="cUp-fW-N9p"/>
-                                    <segue destination="4m5-dH-j9m" kind="modal" identifier="goToPlayPage" id="XuT-6C-GhG"/>
+                                    <segue destination="RjQ-Wg-SQh" kind="modal" identifier="goToPlayerVC" id="gsI-If-pgb"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6lc-6W-7Yx">
@@ -99,7 +99,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqt-YZ-HhL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="800" y="-267"/>
+            <point key="canvasLocation" x="771" y="202"/>
         </scene>
         <!--AV Player View Controller-->
         <scene sceneID="lfD-L7-t6s">
@@ -172,4 +172,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="WJo-GF-FKa"/>
+    </inferredMetricsTieBreakers>
 </document>

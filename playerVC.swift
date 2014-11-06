@@ -16,12 +16,13 @@ class playerVC: AVPlayerViewController {
     var scHandler: SoundCloudHandler!
     
     // the player that contains all our song info
-//    var player: AVPlayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.player = self.scHandler.getAVPlayer()
+//        self.player.play()
+        
+//        self.player = self.scHandler.getAVPlayer()
 
         // Do any additional setup after loading the view.
     }
