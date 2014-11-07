@@ -9,11 +9,39 @@
 import UIKit
 
 class PlaylistTableViewController: UITableViewController {
+
+    var locationArray: [String]                            // locations of user
+    var playlists: [String]                 // playlists for the location
+    let scHandler: SoundCloudHandler?
     
-    let scHandler = SoundCloudHandler()
+
+    override init(style: UITableViewStyle) {
+        // replace this with real locations when getting less ghetto
+        self.locationArray = ["Cornell Tech", "Chelsea", "New York"]
+        
+        // find playlists based on location
+        self.playlists = ["hello"]
+        //        playlists = self.scHandler.getPlaylists(locationArray)
+        
+        if ((self.scHandler) != nil) {
+            println("lets stop yo")
+        }
+        else {
+            self.scHandler = SoundCloudHandler()
+        }
+        
+        super.init(style: style)
+    }
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+//    let scHandler = SoundCloudHandler()
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
     }
 
@@ -57,7 +85,8 @@ class PlaylistTableViewController: UITableViewController {
         
         
         // Pass that view to the scHandler
-        scHandler.playPlaylist(indexPath.row)
+        println("do nothing")
+//        scHandler.playPlaylist(indexPath.row)
     }
 
     /*

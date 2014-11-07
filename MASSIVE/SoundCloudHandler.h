@@ -21,4 +21,12 @@
 // create a player object for playerVC
 - (void)getAVPlayer;
 
+// get playlists based on a given location array
+- (NSArray *)getPlaylists:(NSArray *)locationArray;
+
+// external variable telling us whether or not we have a user access token
+@property (nonatomic) BOOL hasAccessToken; // YES or NO
+
+// dictionary of location: playlistDictionary pairs
+@property (nonatomic, strong) NSMutableDictionary *locationPlaylistDictionary;
 @end

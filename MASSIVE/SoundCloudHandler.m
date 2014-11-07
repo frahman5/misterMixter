@@ -179,6 +179,9 @@
 @property (nonatomic, strong) NSString *clientID;
 @property (nonatomic, strong) NSString *secret;
 @property (nonatomic, strong) NSString *redirectURI;
+@property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, strong) NSString *masterUsername;
+@property (nonatomic, strong) NSString *masterPassword;
 
 // the guy who'll play our songs, and his companion data function
 @property (nonatomic, strong) AVPlayer *player;
@@ -206,7 +209,11 @@
 
 - (void)dummyFunction:(NSArray *)tracks;
 
+// The guy who authenticates us to soundcloud
+- (void)authenticateMasterAccount;
+
 @property (nonatomic, strong) NSArray *tracks;
+
 @end
 
 @implementation SoundCloudHandler
@@ -228,6 +235,17 @@
 //    self.secret = @"fde4df706bb48a58cb3b04f7cde686f9";
 //    self.redirectURI = @"mrMixter://oauth";
     
+    // master soundcloud account
+    self.masterUsername = @"yannis.tsampalis@live.com";
+    self.masterPassword = @"xesee3w";
+    
+    // authenticate us baby
+    NSLog(@"authenticating!");
+    self.hasAccessToken = NO;
+    [self authenticateMasterAccount];
+    
+    // set up the dictionary where we hold playlists
+    self.locationPlaylistDictionary = [[NSMutableDictionary alloc] init];
     
     return self;
 }
@@ -296,7 +314,7 @@
         NSString *streamUrl = [NSString stringWithFormat:@"%@?client_id=%@", [trackDict objectForKey:@"stream_url" ], self.clientID];
         NSString *title = [NSString stringWithFormat:@"%@", [trackDict objectForKey:@"title"]];
         NSArray *relevantInfos = @[streamUrl, title];
-        NSLog(@"%@", relevantInfos);
+//        NSLog(@"%@", relevantInfos);
         
         [self.tracksRelevantInfoArray addObject:relevantInfos];
         
@@ -337,7 +355,7 @@
             NSArray *tracks = [(NSDictionary *)jsonResponse objectForKey:@"tracks"];
             
             self.tracks = tracks;
-            NSLog(@"%@", self.tracks);
+//            NSLog(@"%@", self.tracks);
             [self dummyFunction:self.tracks];
             
         }
@@ -406,8 +424,6 @@
 
 - (void)dummyFunction:(NSArray *)tracks {
     
-    NSLog(@"printing self.tracks in dummy function");
-    NSLog(@"%@", self.tracks);
     
     // Collect  all the tracks into one array
     self.tracksRelevantInfoArray = [[NSMutableArray alloc] init];
@@ -415,7 +431,6 @@
         NSString *streamUrl = [NSString stringWithFormat:@"%@?client_id=%@", [trackDict objectForKey:@"stream_url" ], self.clientID];
         NSString *title = [NSString stringWithFormat:@"%@", [trackDict objectForKey:@"title"]];
         NSArray *relevantInfos = @[streamUrl, title];
-        NSLog(@"%@", relevantInfos);
     
         [self.tracksRelevantInfoArray addObject:relevantInfos];
             
@@ -441,13 +456,13 @@
             [playerItems addObject:nextItem];
         }
 //        AVPlayerItem *firstItem = [AVPlayerItem playerItemWithURL: [[NSURL alloc] initWithString: streamURL]];
-        NSLog(@"%@", playerItems);
+//        NSLog(@"%@", playerItems);
         AVQueuePlayer *queuePlayer = [[AVQueuePlayer alloc] initWithItems:playerItems];
 //        self.player = [[AVPlayer alloc] initWithURL:[[NSURL alloc] initWithString: streamURL]];
         self.player = queuePlayer;
         NSLog(@"playerError: %@", [playerError localizedDescription ]);
         self.ppvC.player = self.player;
-        NSLog(@"%@", self.player);
+//        NSLog(@"%@", self.player);
 
         [self.ppvC.player play];
     };
@@ -473,11 +488,132 @@
     NSLog(@"soundcloud initalized");
 }
 
-// Probably correct authentication url
-// the curl call to get access tokens
-// curl -X POST "https://api.soundcloud.com/oauth2/token" -F "username=frahman305@gmail.com" -F "grant_type=password" -F "client_id=7e4a3481d659fbcd9667741811dfa4ee" -F "client_secret=ad15980c012fd968f0e33784e25b4551" -F "password=mixter25"
-// token should last for 6 hours (21599 seconds).
-// if you use this call, then the token doesn't expire
-// curl -X POST"https://api.soundcloud.com/oauth2/token" -F "username=frahman305@gmail.com" -F "grant_type=password" -F "client_id=7e4a3481d659fbcd9667741811dfa4ee" -F "client_secret=ad15980c012fd968f0e33784e25b4551" -F "password=mixter25" -F "scope=non-expiring"
+- (NSArray *)getPlaylists:(NSArray *)locationArray {
+    NSArray *playlistArray;
+    
+    // make sure we have authenticated by checking for an access token
+    NSAssert(self.accessToken, @"can't get playlists without an access token buddy!");
+    
+    NSString *apiCallString = [NSString stringWithFormat:@"https://api.soundcloud.com/me/playlists.json?oauth_token=%@", self.accessToken];
+    
+    SCRequestResponseHandler handler;
+    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        
+        NSError *jsonError = nil;
+        NSJSONSerialization *jsonResponse = [NSJSONSerialization
+                                             JSONObjectWithData:data
+                                             options:0
+                                             error:&jsonError];
+        
+        if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
+            NSLog(@"sucessfully retrieved playlists for our account");
+            NSArray *arrayResponse = (NSArray *)jsonResponse;
+            
+            // initalize dictionary with locationKey: mutableArray pairs
+            for (NSString *locationString in locationArray) {
+                [self.locationPlaylistDictionary setObject:[[NSMutableArray alloc] init] forKey:locationString];
+            }
+            NSLog(@"inital location playlist dictionary: %@", self.locationPlaylistDictionary);
+            
+            // lowercase and remove spaces in the locationArray to make comparisons easier
+            NSLog(@"location array before lowercasing: %@", locationArray);
+            NSArray *lowercaseArray = [locationArray valueForKey:@"lowercaseString"];
+            NSLog(@"location array after lowercasing: %@", lowercaseArray);
+            NSMutableArray *lowercaseAndSpacelessLocationArray = [[NSMutableArray alloc] init];
+            for (NSString *lowercaseLocation in lowercaseArray) {
+                [lowercaseAndSpacelessLocationArray addObject:[lowercaseLocation stringByReplacingOccurrencesOfString:@" " withString:@""]];
+            }
+            NSLog(@"location array after lowercasing and removing whitespaces: %@", lowercaseAndSpacelessLocationArray);
+            // scan through playlists to find the relevant ones
+            for (NSDictionary *playlistDict in arrayResponse) {
+                
+                // get the tags
+                NSString *tags = [playlistDict objectForKey:@"tag_list"];
+                NSLog(@"tags: %@", tags);
+                
+                NSInteger index = 0;
+                for (NSString *location in lowercaseAndSpacelessLocationArray) {
+                    NSRange substringRange = [tags rangeOfString:location options:NSCaseInsensitiveSearch];
+                    if (substringRange.length > 0) {
+                        // we have a match
+                        [[self.locationPlaylistDictionary objectForKey:locationArray[index]] addObject:playlistDict];
+                    }
+                    index += 1;
+                }
+            }
+            // celebrate
+            NSLog(@"printing dictionary of playlists");
+            NSLog(@"%@", self.locationPlaylistDictionary);
+//            NSLog(@"printing playlist api call response");
+//            NSLog(@"%@", (NSArray *)jsonResponse);
+            
+        }
+        else {
+            NSLog(@"Playlist retrieval failed");
+            NSLog(@"%@", [jsonError localizedDescription]);
+        }
+    };
+
+    // get the playlists
+    NSLog(@"access token: %@", self.accessToken);
+    NSLog(@"api call: %@", apiCallString);
+    [SCRequest performMethod:SCRequestMethodGET
+                  onResource:[NSURL URLWithString:apiCallString]
+             usingParameters:nil
+                 withAccount:nil
+      sendingProgressHandler:nil
+             responseHandler:handler];
+    
+    return playlistArray;
+}
+
+- (void)authenticateMasterAccount {
+    // setup
+    NSURL *authenticationEndpointURL = [NSURL URLWithString:@"https://api.soundcloud.com/oauth2/token"];
+    NSDictionary *parameters = @{
+                                 @"username": self.masterUsername,
+                                 @"grant_type": @"password",
+                                 @"client_id": self.clientID,
+                                 @"client_secret": self.secret,
+                                 @"password": self.masterPassword,
+                                 @"scope": @"non-expiring"
+                                 };
+    SCRequestResponseHandler handler;
+    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        
+        NSError *jsonError = nil;
+        NSJSONSerialization *jsonResponse = [NSJSONSerialization
+                                             JSONObjectWithData:data
+                                             options:0
+                                             error:&jsonError];
+        
+        if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"sucessfully authenticated");
+            
+            self.accessToken = [(NSDictionary *)jsonResponse objectForKey:@"access_token"];
+            NSLog(@"acceess token: %@", self.accessToken);
+            
+            NSAssert(self.accessToken, @"self.accessToken is nil!");
+            self.hasAccessToken = YES;
+            
+            
+        }
+        else {
+            NSLog(@"Authentication failed");
+            NSLog(@"%@", [jsonError localizedDescription]);
+        }
+    };
+    
+    // api call
+    
+    
+    [SCRequest performMethod:SCRequestMethodPOST
+                  onResource:authenticationEndpointURL
+             usingParameters:parameters
+                 withAccount:nil
+      sendingProgressHandler:nil
+             responseHandler:handler ];
+}
+
 @end
 

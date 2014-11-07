@@ -20,16 +20,27 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     // location manager to find user location
     let locationManager = CLLocationManager()
     
-    // TableViewController to list playlists
-    let playlistTVC = PlaylistTableViewController()
-    
     // SoundCloudHandler
     let scHandler = SoundCloudHandler()
+    
+    // TableViewController to list playlists
+//    let playlistTVC = PlaylistTableViewController(style: UITableViewStyle.Plain)
+
+    
+
+    
     
     @IBAction func testAction(sender: AnyObject) {
 
         self.scHandler.getAVPlayer()
         println("change page1")
+        
+        do {
+            println("waiting for access token to be captured")
+        } while (!self.scHandler.hasAccessToken)
+        let playlists = self.scHandler.getPlaylists(self.userLocationsArray)
+        println(playlists)
+        
     }
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -37,7 +48,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
+        
     
 
         
@@ -48,22 +59,25 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 //            locationManager.requestWhenInUseAuthorization()
 //            self.findMyLocation()
 //        }
-
+        
         
         // Place tableView of playlists up
-        let playlistViewBounds = CGRectMake(0, 268, 320, 251)
-        self.playlistTVC.view.frame = playlistViewBounds
-        self.view.addSubview(self.playlistTVC.view)
+//        let playlistViewBounds = CGRectMake(0, 268, 320, 251)
+//        self.playlistTVC.view.frame = playlistViewBounds
+//        self.view.addSubview(self.playlistTVC.view)
         
         // Get rid of this when you get less fake
         self.userLocationsArray = ["Cornell Tech", "Chelsea", "New York"]
         self.userLocations.dataSource = self
         self.userLocations.delegate = self
         
+        // Move this logic to playlistTVC when you can
+
+        
         // Tell me you ran
         println("Ran viewDidLoad")
         
-        
+        super.viewDidLoad()
         
     }
     
