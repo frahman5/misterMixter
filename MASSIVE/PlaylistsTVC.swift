@@ -11,49 +11,51 @@ import UIKit
 
 class PlaylistsTVC: UITableViewController {
 
-//    @IBOutlet // makes the property visible in Interface Builder
-//    var tableView: UITableView!
-    
-    var items: NSDictionary?
-//    var items: [String] = ["Testing", "out", "code", "Testing", "out", "code",
-//                           "Testing", "out", "code", "Testing", "out", "code",
-//                           "Testing", "out", "code"]
+    // Dictionary with <String, NSArray> structure. Keys are locations,
+    // values are Arrays with Dictionary entries e.g [dictionary, dictionary, ..., dictionary]
+    // Each inner dictionary is a soundcloud playlist api call json response, obviously
+    // containing metadata on a soundcloud playlist
+    var items: NSDictionary!
 
-    var location: String?
+    // The location that the user has currently selected.
+    var location: String!
+    
+    // each playlist is a dictionary containing metadata on a soundcloud playlist
+    var playlistArray: NSArray!
     
     override func viewDidLoad() {
-        // Do any additional setup after loading the view.
-        // register the tableView class
-//        self.tableView = UITableView(frame: CGRectMake(0, 0, 100, 100), style: UITableViewStyle.Plain)
         
         // tells the tableView what class of UITableViewCell to create if theres none on 
         // the reuse queue, and what identifier to give it.
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        self.tableView.scrollEnabled = true // make that shit scrollable
         
         super.viewDidLoad()
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func setPlaylistArray() {
+        /* set the instance variable playlistArray once and for all */
+        
+        // Make sure we have set self.items and self.location
+        assert(self.items != nil)
+        assert(self.location != nil)
+        
+        // set the playlistArray
+        self.playlistArray = self.items.objectForKey(self.location) as NSArray
     }
     
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let playlistArray = self.items!.objectForKey(self.location!) as NSArray
-        return playlistArray.count
+        return self.playlistArray.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        println("tableView: \(tableView)")
         
+        // create a cell
         var cell:UITableViewCell? = tableView.dequeueReusableCellWithIdentifier("cell") as? UITableViewCell
         
-        cell!.textLabel!.text = "hello"
-        let playlistArray = self.items!.objectForKey(self.location!) as NSArray
-        let playlist = playlistArray[indexPath.row] as NSDictionary
+        // retrieve the playlist that corresponds to this index path
+        let playlist = self.playlistArray[indexPath.row] as NSDictionary
         
+        // label the cell
         cell!.textLabel!.text = playlist.objectForKey("title") as NSString
         
         return cell!
@@ -61,21 +63,16 @@ class PlaylistsTVC: UITableViewController {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        let playlistArray = self.items!.objectForKey(self.location!) as NSArray
-        let playlistInfo = playlistArray[indexPath.row] as NSDictionary
+        // extract the dictionary with metadata on THIS playlist
+        let playlistInfo = self.playlistArray[indexPath.row] as NSDictionary
         
+        // tell the first view controller to play this playlist, feeding it the necessary info
         NSNotificationCenter.defaultCenter().postNotificationName("playPlaylist", object: nil, userInfo: playlistInfo)
-        
-        println("You selected #\(indexPath.row)")
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
-    */
 
 }

@@ -9,7 +9,6 @@
 import UIKit
 import CoreLocation
 
-
 class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
     
     // Scroll-y view for user locations and the associated data structures
@@ -28,28 +27,10 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     // listen for notifcations
     let listener = NSNotificationCenter.defaultCenter()
-
     
-    @IBAction func bringUpPlaylistsButton(sender: AnyObject) {
-        var playlistTVC = PlaylistsTVC()
-        playlistTVC.view.frame = self.view.frame
-        self.presentViewController(playlistTVC, animated: true, completion: nil)
-    }
-
+    // the controller that we'll push to when we play stuff
+    let playController = PlayPageViewController()
     
-    
-    @IBAction func testAction(sender: AnyObject) {
-
-        self.scHandler.getAVPlayer()
-        println("change page1")
-        
-        do {
-            println("waiting for access token to be captured")
-        } while (!self.scHandler.hasAccessToken)
-        let playlists = self.scHandler.getPlaylists(self.userLocationsArray)
-        println(playlists)
-        
-    }
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
@@ -58,39 +39,37 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     override func viewDidLoad() {
         
         // Ask for location permission and once received, determine location
-        
-        
 //        while (self.foundLocation == nil) {
 //            locationManager.requestWhenInUseAuthorization()
 //            self.findMyLocation()
 //        }
         
-        // Get rid of this when you get less fake
+        // Populate UIPickerView (Make this less fake later)
         self.userLocationsArray = ["Cornell Tech", "Chelsea", "New York"]
         self.userLocations.dataSource = self
         self.userLocations.delegate = self
         
-        // Wait for scHandler to get the access token
+        // Configure a PlayPageViewController for later
+        self.playController.scHandler = self.scHandler
+        self.scHandler.setViewController(self.playController)
+        
+        // When we get the access token, find playlists and populate the table
         self.listener.addObserver(self, selector: "searchPlaylists:", name: "accessToken", object: nil)
         
-        // Wait for a notification to play a playlist
+        // When we've retrieved playlist metadata, play the playlist and change screens
         self.listener.addObserver(self, selector: "playThisPlaylist:", name: "playPlaylist", object: nil)
-        
-        // Tell me you ran
-        println("Ran viewDidLoad")
         
         super.viewDidLoad()
         
     }
     
     func playThisPlaylist(notification: NSNotification) {
-        let playlistInfo = notification.userInfo! as NSDictionary
+        /* Once the scHandler has found the playlist information, 
+           present the play page view controller and play the playlist */
         
-        // Construct a view controller to go to
-        let playController = PlayPageViewController()
-        playController.scHandler = self.scHandler
-        playController.playlistInfo = playlistInfo
-        self.scHandler.setViewController(playController)
+        // Tell the play controller where to get its playlist info
+        let playlistInfo = notification.userInfo! as NSDictionary
+        self.playController.playlistInfo = playlistInfo
         
         // stop listening for that notification
         self.listener.removeObserver(self, name: "playPlaylist", object: nil)
@@ -98,7 +77,11 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         // Present the view controller
         self.presentViewController(playController, animated: true, completion: nil)
     }
+    
     func searchPlaylists(notification: NSNotificationCenter) {
+        /* Once the scHandler has retrieved our soundcloud access token, 
+           tell it to get the playlists for our user's location */
+        
         // Get the playlists
         self.scHandler.getPlaylists(self.userLocationsArray)
         
@@ -108,15 +91,15 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         // start listening for a notification on having found the playlists
         self.listener.addObserver(self, selector: "populatePlaylists:", name: "foundPlaylists", object: nil)
         
-
     }
     
     func populatePlaylists(notification: NSNotification) {
+        /* Once the scHandler has found the playlists, populate our table view
+           with the titles */
+        
         // retrieve the playlists
         let playlists = notification.userInfo! as NSDictionary
-        println("playlists count: \(playlists.count)")
         let location = "Chelsea"
-        println("playlists for Chelsea: \(playlists[location])")
         
         // stop listening for that notication
         self.listener.removeObserver(self, name: "foundPlaylists", object: nil)
@@ -126,6 +109,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         self.playlistTVC.view.frame = playlistViewBounds
         self.playlistTVC.items = playlists
         self.playlistTVC.location = location
+        self.playlistTVC.setPlaylistArray()
         self.view.addSubview(self.playlistTVC.view)
         
     }
