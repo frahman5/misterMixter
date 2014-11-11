@@ -184,7 +184,7 @@
 @property (nonatomic, strong) NSString *masterPassword;
 
 // the guy who'll play our songs, and his companion data function
-@property (nonatomic, strong) AVPlayer *player;
+@property (nonatomic, strong) AVAudioPlayer *player;
 // each element is (streamURL, trackTitle)
 @property (nonatomic, strong) NSMutableArray *tracksRelevantInfoArray;
 @property (nonatomic) NSUInteger trackIndex;
@@ -290,10 +290,10 @@
         
         //play the audio file
         NSError *playerError;
-//        self.player = [[AVAudioPlayer alloc] initWithData:data error:&playerError];
-//        NSLog(@"playerError: %@", [playerError localizedDescription ]);
-//        [self.player prepareToPlay];
-//        [self.player play];
+        self.player = [[AVAudioPlayer alloc] initWithData:data error:&playerError];
+        NSLog(@"playerError: %@", [playerError localizedDescription ]);
+        [self.player prepareToPlay];
+        [self.player play];
     };
     
     
@@ -331,13 +331,16 @@
     return @"this function got called!";
 }
 
-- (void) getAVPlayer {
-//- (void)playPlaylist:(NSInteger) whichPlaylist {
-    [self initializeSoundCloud];
+//- (void) getAVPlayer {
+- (void)playPlaylist:(NSString *) playlistURI {
+    /*
+     
+     
+     */
     
-    // open up a new page
-    
-    
+    playlistURI = [playlistURI stringByAppendingFormat: @".json?client_id=%@", self.clientID];
+    NSLog(@"playing playlist: %@", playlistURI);
+
     // Create a request handler to receive the json response
     SCRequestResponseHandler handler;
     handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
@@ -356,7 +359,8 @@
             
             self.tracks = tracks;
 //            NSLog(@"%@", self.tracks);
-            [self dummyFunction:self.tracks];
+            [self playTracks:self.tracks];
+//            [self dummyFunction:self.tracks];
             
         }
         else {
@@ -364,12 +368,12 @@
             NSLog(@"%@", [jsonError localizedDescription]);
         }
     };
-    
+//
     // Ping the api for the desired playlist
-    NSString *resourceURL = [NSString stringWithFormat:@"https://api.soundcloud.com/playlists/53537234.json?client_id=%@", self.clientID ];
-//    NSString *resourceURL = @"https://api.soundcloud.com/playlists/53537234.json?client_id=7e4a3481d659fbcd9667741811dfa4ee";
+//    NSString *resourceURL = [NSString stringWithFormat:@"https://api.soundcloud.com/playlists/53537234.json?client_id=%@", self.clientID ];
+////    NSString *resourceURL = @"https://api.soundcloud.com/playlists/53537234.json?client_id=7e4a3481d659fbcd9667741811dfa4ee";
     [SCRequest performMethod:SCRequestMethodGET
-                  onResource:[NSURL URLWithString:resourceURL]
+                  onResource:[NSURL URLWithString:playlistURI]
              usingParameters:nil
                  withAccount:nil
       sendingProgressHandler:nil
@@ -513,17 +517,17 @@
             for (NSString *locationString in locationArray) {
                 [self.locationPlaylistDictionary setObject:[[NSMutableArray alloc] init] forKey:locationString];
             }
-            NSLog(@"inital location playlist dictionary: %@", self.locationPlaylistDictionary);
+//            NSLog(@"inital location playlist dictionary: %@", self.locationPlaylistDictionary);
             
             // lowercase and remove spaces in the locationArray to make comparisons easier
-            NSLog(@"location array before lowercasing: %@", locationArray);
+//            NSLog(@"location array before lowercasing: %@", locationArray);
             NSArray *lowercaseArray = [locationArray valueForKey:@"lowercaseString"];
-            NSLog(@"location array after lowercasing: %@", lowercaseArray);
+//            NSLog(@"location array after lowercasing: %@", lowercaseArray);
             NSMutableArray *lowercaseAndSpacelessLocationArray = [[NSMutableArray alloc] init];
             for (NSString *lowercaseLocation in lowercaseArray) {
                 [lowercaseAndSpacelessLocationArray addObject:[lowercaseLocation stringByReplacingOccurrencesOfString:@" " withString:@""]];
             }
-            NSLog(@"location array after lowercasing and removing whitespaces: %@", lowercaseAndSpacelessLocationArray);
+//            NSLog(@"location array after lowercasing and removing whitespaces: %@", lowercaseAndSpacelessLocationArray);
             // scan through playlists to find the relevant ones
             for (NSDictionary *playlistDict in arrayResponse) {
                 
@@ -542,10 +546,15 @@
                 }
             }
             // celebrate
-            NSLog(@"printing dictionary of playlists");
-            NSLog(@"%@", self.locationPlaylistDictionary);
-//            NSLog(@"printing playlist api call response");
-//            NSLog(@"%@", (NSArray *)jsonResponse);
+//            NSLog(@"printing dictionary of playlists");
+//            NSLog(@"%@", self.locationPlaylistDictionary);
+            
+            // tell the app that we got the playlists
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"foundPlaylists"
+                                                                object:self
+                                                              userInfo:self.locationPlaylistDictionary];
+            
+
             
         }
         else {
@@ -595,6 +604,11 @@
             
             NSAssert(self.accessToken, @"self.accessToken is nil!");
             self.hasAccessToken = YES;
+            
+            // tell the master app that we have the access token
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"accessToken"
+                                                                object:self
+                                                              userInfo:nil];
             
             
         }

@@ -12,10 +12,21 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+//    var tableDelegateAndDataSource: PlaylistsTVC!
+//    var mainStoryBoard: UIStoryboard!
+//    var playlistsViewController: UIViewController!
+    
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+//        self.tableDelegateAndDataSource = PlaylistsTVC()
+//
+//        self.mainStoryBoard = UIStoryboard(name: "Main", bundle: nil)
+//        self.playlistsViewController = self.mainStoryBoard.instantiateViewControllerWithIdentifier( "playlistsTVCStoryBoard") as UIViewController
+//        self.playlistsViewController.
+        
         return true
     }
 

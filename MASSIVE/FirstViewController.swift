@@ -24,9 +24,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     let scHandler = SoundCloudHandler()
     
     // TableViewController to list playlists
-//    let playlistTVC = PlaylistTableViewController(style: UITableViewStyle.Plain)
+    let playlistTVC = PlaylistsTVC(style: UITableViewStyle.Plain)
+    
+    // listen for notifcations
+    let listener = NSNotificationCenter.defaultCenter()
 
     
+    @IBAction func bringUpPlaylistsButton(sender: AnyObject) {
+        var playlistTVC = PlaylistsTVC()
+        playlistTVC.view.frame = self.view.frame
+        self.presentViewController(playlistTVC, animated: true, completion: nil)
+    }
 
     
     
@@ -49,9 +57,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     override func viewDidLoad() {
         
-    
-
-        
         // Ask for location permission and once received, determine location
         
         
@@ -60,19 +65,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 //            self.findMyLocation()
 //        }
         
-        
-        // Place tableView of playlists up
-//        let playlistViewBounds = CGRectMake(0, 268, 320, 251)
-//        self.playlistTVC.view.frame = playlistViewBounds
-//        self.view.addSubview(self.playlistTVC.view)
-        
         // Get rid of this when you get less fake
         self.userLocationsArray = ["Cornell Tech", "Chelsea", "New York"]
         self.userLocations.dataSource = self
         self.userLocations.delegate = self
         
-        // Move this logic to playlistTVC when you can
-
+        // Wait for scHandler to get the access token
+        self.listener.addObserver(self, selector: "searchPlaylists:", name: "accessToken", object: nil)
+        
+        // Wait for a notification to play a playlist
+        self.listener.addObserver(self, selector: "playThisPlaylist:", name: "playPlaylist", object: nil)
         
         // Tell me you ran
         println("Ran viewDidLoad")
@@ -81,6 +83,52 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
     }
     
+    func playThisPlaylist(notification: NSNotification) {
+        let playlistInfo = notification.userInfo! as NSDictionary
+        
+        // Construct a view controller to go to
+        let playController = PlayPageViewController()
+        playController.scHandler = self.scHandler
+        playController.playlistInfo = playlistInfo
+        self.scHandler.setViewController(playController)
+        
+        // stop listening for that notification
+        self.listener.removeObserver(self, name: "playPlaylist", object: nil)
+        
+        // Present the view controller
+        self.presentViewController(playController, animated: true, completion: nil)
+    }
+    func searchPlaylists(notification: NSNotificationCenter) {
+        // Get the playlists
+        self.scHandler.getPlaylists(self.userLocationsArray)
+        
+        // stop listening for that notification
+        self.listener.removeObserver(self, name: "accessToken", object: nil)
+        
+        // start listening for a notification on having found the playlists
+        self.listener.addObserver(self, selector: "populatePlaylists:", name: "foundPlaylists", object: nil)
+        
+
+    }
+    
+    func populatePlaylists(notification: NSNotification) {
+        // retrieve the playlists
+        let playlists = notification.userInfo! as NSDictionary
+        println("playlists count: \(playlists.count)")
+        let location = "Chelsea"
+        println("playlists for Chelsea: \(playlists[location])")
+        
+        // stop listening for that notication
+        self.listener.removeObserver(self, name: "foundPlaylists", object: nil)
+        
+        // Place tableView of playlists up
+        let playlistViewBounds = CGRectMake(0, 268, 320, 251)
+        self.playlistTVC.view.frame = playlistViewBounds
+        self.playlistTVC.items = playlists
+        self.playlistTVC.location = location
+        self.view.addSubview(self.playlistTVC.view)
+        
+    }
     func findMyLocation() {
         
         // If the user hasn't given us permission yet, don't run location services

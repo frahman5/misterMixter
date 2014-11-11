@@ -11,9 +11,9 @@ import UIKit
 class PlaylistTableViewController: UITableViewController {
 
     var locationArray: [String]                            // locations of user
-    var playlists: [String]                 // playlists for the location
+    var playlists: [String]                                // playlists for the location
     let scHandler: SoundCloudHandler?
-    
+
 
     override init(style: UITableViewStyle) {
         // replace this with real locations when getting less ghetto
