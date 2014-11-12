@@ -37,16 +37,12 @@ class PlayPageViewController: UIViewController {
         self.scHandler!.pause()
     }
     
-    
-    func setSongTitle(songTitle: NSString) {
-        println("song title: %@", songTitle)
-        self.songTitle.text = songTitle
-//        self.songTitle.text = songTitle
-    }
-    
     override func viewDidLoad() {
         let title = self.playlistInfo!.objectForKey("title") as NSString!
         var uri = self.playlistInfo!.objectForKey("uri") as NSString!
+        
+        println("title: \(title)")
+        println("uri: \(uri)")
         
         self.scHandler.playPlaylist(uri)
         

@@ -7,8 +7,6 @@
 //
 
 #import "SoundCloudHandler.h"                   // public properties/functions
-#import "SCUI.h"                                // soundcloud api
-#import <AVFoundation/AVFoundation.h>           // playing audio files
 #import "MASSIVE-Swift.h"                       // bridge to swift functions
 
 @interface SoundCloudHandler ()
@@ -24,7 +22,7 @@
 @property (nonatomic, strong) NSString *masterUsername;
 @property (nonatomic, strong) NSString *masterPassword;
 
-// the guy who'll play our songs, and his companion data function
+// the guy who'll play our songs, and his companion data functions
 @property (nonatomic, strong) AVAudioPlayer *player;
 // each element is (streamURL, trackTitle)
 @property (nonatomic, strong) NSMutableArray *tracksRelevantInfoArray;
@@ -43,8 +41,6 @@
  Given an array of format (stream_url, title, etc), play the song
  and display relevant information!
  */
-
-- (void) stop;
 
 // The guy who authenticates us to soundcloud
 - (void)authenticateMasterAccount;
@@ -86,14 +82,16 @@
 }
 
 - (void) playTrack:(NSArray *)trackInfo {
+    
+    // Extract the streaming URL
     NSString *streamURL = trackInfo[0];
     NSLog(@"playing track: %@", streamURL);
-    // tell our view controller what we are playing
-//    self.ppvC.songTitle.text = trackInfo[1];
     
     // make a request handler to read in json response
     SCRequestResponseHandler handler;
     handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        
+        NSLog(@"we made the call to play the track");
         
         //play the audio file
         NSError *playerError;
@@ -132,21 +130,11 @@
     
 }
 
-- (NSString *)fetchPlaylistsForLocation:(NSString *)location {
-    NSLog(@"fetched playlist");
-    
-    return @"this function got called!";
-}
-
-//- (void) getAVPlayer {
 - (void)playPlaylist:(NSString *) playlistURI {
     /*
        Given the universal resource identifier for a soundcloud playlist, 
        fetches the corresponding tracks and calls "playTracks" to play them
      */
-    
-    // Edit the URI to ask for a JSON Response, and tell the API who we are
-    playlistURI = [playlistURI stringByAppendingFormat: @".json?client_id=%@", self.clientID];
 
     // Create a request handler to receive the json response
     SCRequestResponseHandler handler;
@@ -164,7 +152,6 @@
         
         // If all went well, extract the tracks and play them
         if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
-            
             NSLog(@"succesffuly retrieved playlist");
             
             // extract tracks
@@ -183,6 +170,10 @@
         }
     };
     
+    // Edit the URI to ask for a JSON Response, and tell the API who we are
+    playlistURI = [playlistURI stringByAppendingFormat: @".json?client_id=%@", self.clientID];
+    
+    // make the actual API call
     [SCRequest performMethod:SCRequestMethodGET
                   onResource:[NSURL URLWithString:playlistURI]
              usingParameters:nil
@@ -192,148 +183,146 @@
     
 }
 
-//- (AVPlayer *)getAVPlayer {
-//    AVPlayer *avPlayer;
-//    
-//    [self setTracksArray];
-
-//    while (self.tracks == nil) {
-//        NSLog(@"waiting");
-//    }
-//    NSLog(@"lets print self.tracks in getAVPPlayer");
-//    NSLog(@"%@", self.tracks);
-
-    // Collect all the tracks into one array
-//    self.tracksRelevantInfoArray = [[NSMutableArray alloc] init];
-//    
-//    for (NSDictionary *trackDict in self.tracks) {
-//        NSString *streamUrl = [NSString stringWithFormat:@"%@?client_id=%@", [trackDict objectForKey:@"stream_url" ], self.clientID];
-//        NSString *title = [NSString stringWithFormat:@"%@", [trackDict objectForKey:@"title"]];
-//        NSArray *relevantInfos = @[streamUrl, title];
-//        NSLog(@"%@", relevantInfos);
-//    
-//        [self.tracksRelevantInfoArray addObject:relevantInfos];
-//    
-//    }
-//    
-//        // get the track info
-//        NSString *streamURL = self.tracksRelevantInfoArray[0];
-//        NSLog(@"playing track: %@", streamURL);
-    
-//        // make a request handler to read in json response
-//        SCRequestResponseHandler handler;
-//        handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
-//    
-//            // set the player
-//            NSError *playerError;
-//            avPlayer = [[AVPlayer alloc] initWithURL:[[NSURL alloc] initWithString: streamURL]];
-//    //        self.player = [[AVPlayer alloc] initWithData:data error:&playerError];
-//            NSLog(@"playerError: %@", [playerError localizedDescription ]);
-//        };
-    
-        // return the player
-//        return self.player;
-    
-//    return avPlayer;
-//}
 
 
 - (void) initializeSoundCloud {
-    NSLog(@"self.clientID: %@", self.clientID);
-    NSLog(@"self.secret: %@", self.secret);
+    /*
+     Simply tells the relevant soundcloud objects who we are
+     */
     [SCSoundCloud setClientID:self.clientID
                        secret:self.secret
                   redirectURL:[NSURL URLWithString:self.redirectURI]];
-    
-    NSLog(@"soundcloud initalized");
 }
 
-- (NSArray *)getPlaylists:(NSArray *)locationArray {
-    NSArray *playlistArray;
+- (void)getPlaylists:(NSArray *)locationArray {
     
     // make sure we have authenticated by checking for an access token
     NSAssert(self.accessToken, @"can't get playlists without an access token buddy!");
     
-    NSString *apiCallString = [NSString stringWithFormat:@"https://api.soundcloud.com/me/playlists.json?oauth_token=%@", self.accessToken];
-    
+    // create a handler to respond to the request
     SCRequestResponseHandler handler;
     handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
         
+        // create a JSON reading object to convert the data to something readable
         NSError *jsonError = nil;
         NSJSONSerialization *jsonResponse = [NSJSONSerialization
                                              JSONObjectWithData:data
                                              options:0
                                              error:&jsonError];
         
+        // all went well, lets get some playlists!
         if (!jsonError && [jsonResponse isKindOfClass:[NSArray class]]) {
             NSLog(@"sucessfully retrieved playlists for our account");
+            
+            // cast the response as an array
             NSArray *arrayResponse = (NSArray *)jsonResponse;
             
             // initalize dictionary with locationKey: mutableArray pairs
             for (NSString *locationString in locationArray) {
-                [self.locationPlaylistDictionary setObject:[[NSMutableArray alloc] init] forKey:locationString];
+                [self.locationPlaylistDictionary setObject:[[NSMutableArray alloc] init]
+                                                    forKey:locationString];
             }
-//            NSLog(@"inital location playlist dictionary: %@", self.locationPlaylistDictionary);
             
             // lowercase and remove spaces in the locationArray to make comparisons easier
-//            NSLog(@"location array before lowercasing: %@", locationArray);
+            // e.g Cornell Tech -> cornelltech
             NSArray *lowercaseArray = [locationArray valueForKey:@"lowercaseString"];
-//            NSLog(@"location array after lowercasing: %@", lowercaseArray);
             NSMutableArray *lowercaseAndSpacelessLocationArray = [[NSMutableArray alloc] init];
             for (NSString *lowercaseLocation in lowercaseArray) {
                 [lowercaseAndSpacelessLocationArray addObject:[lowercaseLocation stringByReplacingOccurrencesOfString:@" " withString:@""]];
             }
-//            NSLog(@"location array after lowercasing and removing whitespaces: %@", lowercaseAndSpacelessLocationArray);
-            // scan through playlists to find the relevant ones
+            
+            
+            // scan through playlists to find the ones tagged with our locations
             for (NSDictionary *playlistDict in arrayResponse) {
                 
-                // get the tags
+                // get the tags for that playlist
                 NSString *tags = [playlistDict objectForKey:@"tag_list"];
-                NSLog(@"tags: %@", tags);
                 
-                NSInteger index = 0;
+                // iterate through the locations and see if any tags match
+                NSInteger index = 0;                    // 0-> location0, 1-> location1, etc
                 for (NSString *location in lowercaseAndSpacelessLocationArray) {
+                    
+                    // do we have a match?
                     NSRange substringRange = [tags rangeOfString:location options:NSCaseInsensitiveSearch];
+                    
+                    // match found
                     if (substringRange.length > 0) {
-                        // we have a match
+                        // add the playlist to our dictionary
                         [[self.locationPlaylistDictionary objectForKey:locationArray[index]] addObject:playlistDict];
                     }
+                    
+                    // make sure we're moving through playlists
                     index += 1;
                 }
             }
-            // celebrate
-//            NSLog(@"printing dictionary of playlists");
-//            NSLog(@"%@", self.locationPlaylistDictionary);
             
-            // tell the app that we got the playlists
+            // tell the firstViewController that we got our playlists so it can populate the tableView
             [[NSNotificationCenter defaultCenter] postNotificationName:@"foundPlaylists"
                                                                 object:self
                                                               userInfo:self.locationPlaylistDictionary];
             
-
-            
         }
+        
+        // something went wrong. Cry.
         else {
             NSLog(@"Playlist retrieval failed");
             NSLog(@"%@", [jsonError localizedDescription]);
         }
     };
-
-    // get the playlists
-    NSLog(@"access token: %@", self.accessToken);
-    NSLog(@"api call: %@", apiCallString);
+    
+    // this api call string retrieves all playlists on the master account
+    NSString *apiCallString = [NSString stringWithFormat:@"https://api.soundcloud.com/me/playlists.json?oauth_token=%@", self.accessToken];
+    
+    // make the actual api call
     [SCRequest performMethod:SCRequestMethodGET
                   onResource:[NSURL URLWithString:apiCallString]
              usingParameters:nil
                  withAccount:nil
       sendingProgressHandler:nil
              responseHandler:handler];
-    
-    return playlistArray;
 }
 
 - (void)authenticateMasterAccount {
-    // setup
+    /*
+     Asks for an access token for the master account, so we can "sign in" to it
+     and keep asking the api questions about its contents, without having to
+     have the user need to do anything on his side.
+     */
+    
+    // Create a request handler to handle the API's response
+    SCRequestResponseHandler handler;
+    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
+        
+        // Create a JSON reading object to interpret the response
+        NSError *jsonError = nil;
+        NSJSONSerialization *jsonResponse = [NSJSONSerialization
+                                             JSONObjectWithData:data
+                                             options:0
+                                             error:&jsonError];
+        
+        // All went well. Let's rock and roll!
+        if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"sucessfully authenticated");
+            
+            // Set our access token baby
+            self.accessToken = [(NSDictionary *)jsonResponse objectForKey:@"access_token"];
+            NSAssert(self.accessToken, @"self.accessToken is nil!");
+            
+            // tell the firstViewController that we have the access token
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"accessToken"
+                                                                object:self
+                                                              userInfo:nil];
+
+        }
+        
+        // Something went wrong. Cry
+        else {
+            NSLog(@"Authentication failed");
+            NSLog(@"%@", [jsonError localizedDescription]);
+        }
+    };
+    
+    // Set the URL and parameters that allow us to authenticate
     NSURL *authenticationEndpointURL = [NSURL URLWithString:@"https://api.soundcloud.com/oauth2/token"];
     NSDictionary *parameters = @{
                                  @"username": self.masterUsername,
@@ -343,40 +332,8 @@
                                  @"password": self.masterPassword,
                                  @"scope": @"non-expiring"
                                  };
-    SCRequestResponseHandler handler;
-    handler = ^(NSURLResponse *response, NSData *data, NSError *error) {
-        
-        NSError *jsonError = nil;
-        NSJSONSerialization *jsonResponse = [NSJSONSerialization
-                                             JSONObjectWithData:data
-                                             options:0
-                                             error:&jsonError];
-        
-        if (!jsonError && [jsonResponse isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"sucessfully authenticated");
-            
-            self.accessToken = [(NSDictionary *)jsonResponse objectForKey:@"access_token"];
-            NSLog(@"acceess token: %@", self.accessToken);
-            
-            NSAssert(self.accessToken, @"self.accessToken is nil!");
-            self.hasAccessToken = YES;
-            
-            // tell the master app that we have the access token
-            [[NSNotificationCenter defaultCenter] postNotificationName:@"accessToken"
-                                                                object:self
-                                                              userInfo:nil];
-            
-            
-        }
-        else {
-            NSLog(@"Authentication failed");
-            NSLog(@"%@", [jsonError localizedDescription]);
-        }
-    };
     
-    // api call
-    
-    
+    // Make the actual API Call to authenticate us!
     [SCRequest performMethod:SCRequestMethodPOST
                   onResource:authenticationEndpointURL
              usingParameters:parameters

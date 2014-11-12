@@ -28,7 +28,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     // listen for notifcations
     let listener = NSNotificationCenter.defaultCenter()
     
-    // the controller that we'll push to when we play stuff
+    // Things the PlayPageViewController will need
+    var playlistInfo: NSDictionary!
+    
     let playController = PlayPageViewController()
     
     required init(coder aDecoder: NSCoder) {
@@ -51,7 +53,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
         // Configure a PlayPageViewController for later
         self.playController.scHandler = self.scHandler
-        self.scHandler.setViewController(self.playController)
+        self.scHandler.ppvC = self.playController as PlayPageViewController
         
         // When we get the access token, find playlists and populate the table
         self.listener.addObserver(self, selector: "searchPlaylists:", name: "accessToken", object: nil)
@@ -68,14 +70,19 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
            present the play page view controller and play the playlist */
         
         // Tell the play controller where to get its playlist info
-        let playlistInfo = notification.userInfo! as NSDictionary
-        self.playController.playlistInfo = playlistInfo
+//        let playlistInfo = notification.userInfo! as NSDictionary
+//        self.playController.playlistInfo = playlistInfo
+        
+        // Extract information controller will need to play music
+        self.playlistInfo = notification.userInfo! as NSDictionary
         
         // stop listening for that notification
         self.listener.removeObserver(self, name: "playPlaylist", object: nil)
         
+        self.performSegueWithIdentifier("goToPlayPage", sender: self)
+//        [self performSegueWithIdentifier:@"Associate" sender:sender]
         // Present the view controller
-        self.presentViewController(playController, animated: true, completion: nil)
+//        self.presentViewController(playController, animated: true, completion: nil)
     }
     
     func searchPlaylists(notification: NSNotificationCenter) {
@@ -99,7 +106,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
         // retrieve the playlists
         let playlists = notification.userInfo! as NSDictionary
-        let location = "Chelsea"
+        let location = self.userLocationsArray[0]
         
         // stop listening for that notication
         self.listener.removeObserver(self, name: "foundPlaylists", object: nil)
@@ -194,6 +201,17 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "goToPlayPage") {
+            let playPageVC = segue.destinationViewController as PlayPageViewController
+            
+            // give it what it needs to play music
+            playPageVC.scHandler = self.scHandler
+            playPageVC.playlistInfo = self.playlistInfo
+//            playPageVC.songTitle.text = "it works!!!"
+        }
     }
     
 }
