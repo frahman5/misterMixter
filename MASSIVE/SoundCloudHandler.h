@@ -12,21 +12,14 @@
 
 
 @interface SoundCloudHandler : NSObject
-- (NSString *)fetchPlaylistsForLocation:(NSString *)location;
+
+// Interfacing with PlayPageViewController to control audio playback
 - (void) playPlaylist:(NSString *) playlistURI;
-- (void) setViewController:(UIViewController *) viewController;
 - (void) nextSong;
 - (void) previousSong;
 - (void) pause;
-// create a player object for playerVC
-- (void)getAVPlayer;
 
-// get playlists based on a given location array
+// Interfacing with FirstViewController to find the appropriate playlists
 - (NSArray *)getPlaylists:(NSArray *)locationArray;
 
-// external variable telling us whether or not we have a user access token
-@property (nonatomic) BOOL hasAccessToken; // YES or NO
-
-// dictionary of location: playlistDictionary pairs
-@property (nonatomic, strong) NSMutableDictionary *locationPlaylistDictionary;
 @end

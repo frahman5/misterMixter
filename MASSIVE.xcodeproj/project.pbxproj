@@ -17,14 +17,12 @@
 		757A5E421A02EFF700AD1DF6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 757A5E411A02EFF700AD1DF6 /* Images.xcassets */; };
 		757A5E451A02EFF700AD1DF6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 757A5E431A02EFF700AD1DF6 /* LaunchScreen.xib */; };
 		757A5E511A02EFF700AD1DF6 /* MASSIVETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757A5E501A02EFF700AD1DF6 /* MASSIVETests.swift */; };
-		757A5E601A02F8A900AD1DF6 /* PlaylistTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757A5E5F1A02F8A900AD1DF6 /* PlaylistTableViewController.swift */; };
 		75A883501A03564D00D8E3F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75A8834F1A03564D00D8E3F0 /* AVFoundation.framework */; };
 		75A883541A035A8700D8E3F0 /* PlayPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75A883531A035A8700D8E3F0 /* PlayPageViewController.swift */; };
 		75A883571A0363D400D8E3F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 75A883551A0363D400D8E3F0 /* Main.storyboard */; };
 		75A883591A036F8400D8E3F0 /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A883581A036F8400D8E3F0 /* play.png */; };
 		75A8835B1A036F9A00D8E3F0 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A8835A1A036F9A00D8E3F0 /* pause.png */; };
 		75ABBF7D1A0974D300C59FBA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75ABBF7C1A0974D300C59FBA /* AVKit.framework */; };
-		75ABBF7F1A09750400C59FBA /* playerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75ABBF7E1A09750400C59FBA /* playerVC.swift */; };
 		75C009451A0D777500D8CA49 /* PlaylistsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */; };
 /* End PBXBuildFile section */
 
@@ -55,14 +53,12 @@
 		757A5E4A1A02EFF700AD1DF6 /* MASSIVETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MASSIVETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		757A5E4F1A02EFF700AD1DF6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		757A5E501A02EFF700AD1DF6 /* MASSIVETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MASSIVETests.swift; sourceTree = "<group>"; };
-		757A5E5F1A02F8A900AD1DF6 /* PlaylistTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistTableViewController.swift; sourceTree = "<group>"; };
 		75A8834F1A03564D00D8E3F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		75A883531A035A8700D8E3F0 /* PlayPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayPageViewController.swift; sourceTree = "<group>"; };
 		75A883561A0363D400D8E3F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = misterMixter/MASSIVE/Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		75A883581A036F8400D8E3F0 /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		75A8835A1A036F9A00D8E3F0 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		75ABBF7C1A0974D300C59FBA /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		75ABBF7E1A09750400C59FBA /* playerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = playerVC.swift; path = ../playerVC.swift; sourceTree = "<group>"; };
 		75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsTVC.swift; sourceTree = "<group>"; };
 		8660081DD1A7899E672F72EB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E799D83537592F39A4DB79E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -185,8 +181,6 @@
 				757A5E3C1A02EFF700AD1DF6 /* SecondViewController.swift */,
 				75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */,
 				757A5E3A1A02EFF700AD1DF6 /* FirstViewController.swift */,
-				757A5E5F1A02F8A900AD1DF6 /* PlaylistTableViewController.swift */,
-				75ABBF7E1A09750400C59FBA /* playerVC.swift */,
 				75A883531A035A8700D8E3F0 /* PlayPageViewController.swift */,
 				756A9EF91A12C61F00934F5E /* playlistStructure.txt */,
 				756A9EFA1A12C61F00934F5E /* TemplateIcon2x.png */,
@@ -338,8 +332,6 @@
 				757A5E391A02EFF700AD1DF6 /* AppDelegate.swift in Sources */,
 				75A883541A035A8700D8E3F0 /* PlayPageViewController.swift in Sources */,
 				757A5E3B1A02EFF700AD1DF6 /* FirstViewController.swift in Sources */,
-				757A5E601A02F8A900AD1DF6 /* PlaylistTableViewController.swift in Sources */,
-				75ABBF7F1A09750400C59FBA /* playerVC.swift in Sources */,
 				75C009451A0D777500D8CA49 /* PlaylistsTVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

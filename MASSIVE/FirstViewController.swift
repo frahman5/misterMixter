@@ -19,7 +19,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     // location manager to find user location
     let locationManager = CLLocationManager()
     
-    // SoundCloudHandler
+    // This object handles all direct interaction with the soundcloud api
     let scHandler = SoundCloudHandler()
     
     // TableViewController to list playlists
@@ -156,7 +156,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         self.foundLocation = true
         
         // Fetch playlists
-        self.scHandler.fetchPlaylistsForLocation("Location")
+//        self.scHandler.fetchPlaylistsForLocation("Location")
         
     }
     
@@ -166,13 +166,29 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     }
     
     // The number of rows of data
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    func pickerView(pickerView: UIPickerView,
+        numberOfRowsInComponent component: Int) -> Int {
         return userLocationsArray.count
     }
     
     // The data for the row and component passed
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int,
+        forComponent component: Int) -> String! {
         return userLocationsArray[row]
+    }
+    
+    // What to do when a row on the picker view gets selected
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int,
+        inComponent component: Int) {
+            
+        // reset the location on the tableViewController
+        let location = userLocationsArray[row]
+        self.playlistTVC.location = location
+        self.playlistTVC.setPlaylistArray()
+        
+        // tell it to reload its rows
+        self.playlistTVC.tableView.reloadData()
+            
     }
     
     override func didReceiveMemoryWarning() {
@@ -180,25 +196,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         // Dispose of any resources that can be recreated.
     }
     
-    
-    override func prepareForSegue(segue: UIStoryboardSegue?, sender: AnyObject?) {
-        println("prepare for segue")
-        
-        println("sender: %@", sender)
-  
-        if segue?.identifier == "goToPlayerVC" {
-            let viewController:playerVC = segue!.destinationViewController as playerVC
-            viewController.scHandler = self.scHandler
-            self.scHandler.setViewController(viewController)
-        } else {
-            assert (segue?.identifier == "goToPlayPage")
-            let viewController:PlayPageViewController = segue!.destinationViewController as PlayPageViewController
-            viewController.scHandler = self.scHandler
-            self.scHandler.setViewController(viewController)
-        }
-
-        
-    }
 }
 
 
