@@ -20,6 +20,7 @@
 - (void) nextSong;
 - (void) previousSong;
 - (void) pause;
+- (void) play;
 
 // Interfacing with FirstViewController to find the appropriate playlists
 - (void)getPlaylists:(NSArray *)locationArray;

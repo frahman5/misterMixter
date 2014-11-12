@@ -14,6 +14,7 @@ class PlayPageViewController: UIViewController {
     var player: AVPlayer!
     var scHandler: SoundCloudHandler!
     var playlistInfo: NSDictionary?
+    let listener = NSNotificationCenter.defaultCenter()
     
     @IBOutlet var songTitle: UILabel!
     
@@ -25,25 +26,34 @@ class PlayPageViewController: UIViewController {
         self.scHandler.previousSong()
     }
     
-    let pauseImage: UIImage = UIImage(contentsOfFile: "pause.png")
-//    let pauseImage: UIImage = UIImage(named: "pause.png")
+    // play and pause button images
+    let pauseImage: UIImage = UIImage(named: "pause.png")
     let playImage: UIImage = UIImage(named: "play.png")
     
     @IBOutlet var playPauseButton: UIButton!
     
-    @IBAction func pause(sender: AnyObject) {
-        // send soundCloundHandler the message to pause
-        self.playPauseButton.setImage(self.playImage, forState: UIControlState.Normal)
-        self.scHandler!.pause()
+    @IBAction func pauseOrPlay(sender: AnyObject) {
+        
+        // What to do if its currently playing
+        if (self.playPauseButton.currentImage! == self.pauseImage) {
+            self.scHandler!.pause()
+            self.playPauseButton.setImage(self.playImage, forState: UIControlState.Normal)
+        } else {
+            // what to do its currently paused
+            assert(self.playPauseButton.currentImage! == self.playImage)
+            self.scHandler!.play()
+            self.playPauseButton.setImage(self.pauseImage, forState: UIControlState.Normal)
+        }
     }
     
     override func viewDidLoad() {
+        // set up a listener so we know when to change song Title
+        self.listener.addObserver(self,
+            selector: "setSongInfo:", name: "changeTrackInfo", object: nil)
+        
+        // play that playlist
         let title = self.playlistInfo!.objectForKey("title") as NSString!
         var uri = self.playlistInfo!.objectForKey("uri") as NSString!
-        
-        println("title: \(title)")
-        println("uri: \(uri)")
-        
         self.scHandler.playPlaylist(uri)
         
 //        self.playPauseButton.setImage(self.pauseImage, forState:UIControlState.Normal)
@@ -63,6 +73,18 @@ class PlayPageViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    func setSongInfo(notification: NSNotification) {
+        /*
+            Changes the UI to reflect info on the current song
+        */
+        let trackDict = notification.userInfo! as NSDictionary
+        self.songTitle.text = trackDict["title"] as NSString
+        
+        // change the playPauseButton to indicate pausing
+        self.playPauseButton.setImage(self.pauseImage, forState: UIControlState.Normal)
+        
+        
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

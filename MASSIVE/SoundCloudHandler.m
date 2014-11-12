@@ -38,8 +38,8 @@
 
 - (void) playTrack:(NSArray *)trackInfo;
 /*
- Given an array of format (stream_url, title, etc), play the song
- and display relevant information!
+ Given an array of format (stream_url, title, artist), play the song
+ and tell the view controller to display relevant information!
  */
 
 // The guy who authenticates us to soundcloud
@@ -81,6 +81,11 @@
     
 }
 
+- (void) play {
+    [self.player play];
+    
+}
+
 - (void) playTrack:(NSArray *)trackInfo {
     
     // Extract the streaming URL
@@ -99,6 +104,13 @@
         NSLog(@"playerError: %@", [playerError localizedDescription ]);
         [self.player prepareToPlay];
         [self.player play];
+        
+        // tell the PlayPageViewController what to display
+        NSString *title = trackInfo[1];
+        NSDictionary *trackInfo = @{@"title": title};
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"changeTrackInfo"
+                                                            object:nil
+                                                          userInfo:trackInfo];
     };
     
     
@@ -116,6 +128,7 @@
     
     // Collect all the tracks into one array
     for (NSDictionary *trackDict in tracksArray) {
+        NSLog(@"%@", trackDict);
         NSString *streamUrl = [NSString stringWithFormat:@"%@?client_id=%@", [trackDict objectForKey:@"stream_url" ], self.clientID];
         NSString *title = [NSString stringWithFormat:@"%@", [trackDict objectForKey:@"title"]];
         NSArray *relevantInfos = @[streamUrl, title];
