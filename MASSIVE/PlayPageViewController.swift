@@ -56,18 +56,16 @@ class PlayPageViewController: UIViewController {
         var uri = self.playlistInfo!.objectForKey("uri") as NSString!
         self.scHandler.playPlaylist(uri)
         
-//        self.playPauseButton.setImage(self.pauseImage, forState:UIControlState.Normal)
-//        println("We opened the right view controller")
-//        
-//        // set up gesture recognizers
-//            // Right swipe plays the next song
-//        let rightSwipe = UISwipeGestureRecognizer(target: self, action: "nextSong:")
-//        rightSwipe.direction = UISwipeGestureRecognizerDirection.Right
-//        view.addGestureRecognizer(rightSwipe)
-//            // Left swipe plays the previous song
-//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: "previousSong:")
-//        leftSwipe.direction = UISwipeGestureRecognizerDirection.Left
-//        view.addGestureRecognizer(leftSwipe)
+        // set up gesture recognizers
+            // Right swipe plays the next song
+        let rightSwipe = UISwipeGestureRecognizer(target: self, action: "nextSong:")
+        rightSwipe.direction = UISwipeGestureRecognizerDirection.Right
+        view.addGestureRecognizer(rightSwipe)
+        
+            // Left swipe plays the previous song
+        let leftSwipe = UISwipeGestureRecognizer(target: self, action: "previousSong:")
+        leftSwipe.direction = UISwipeGestureRecognizerDirection.Left
+        view.addGestureRecognizer(leftSwipe)
         
         super.viewDidLoad()
         // Do any additional setup after loading the view.
