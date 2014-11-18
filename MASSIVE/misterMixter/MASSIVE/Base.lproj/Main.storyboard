@@ -23,33 +23,13 @@
                                 <rect key="frame" x="-146" y="84" width="600" height="176"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </pickerView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oKF-HX-vgd">
-                                <rect key="frame" x="86" y="244" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="testAction:" destination="9pv-A4-QxB" eventType="touchUpInside" id="cUp-fW-N9p"/>
-                                    <segue destination="RjQ-Wg-SQh" kind="modal" identifier="goToPlayerVC" id="gsI-If-pgb"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="6lc-6W-7Yx">
-                                <rect key="frame" x="163" y="244" width="81" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="ButtonToAV">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="RjQ-Wg-SQh" kind="modal" identifier="goToPlayerVC" id="WJo-GF-FKa"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                     <connections>
                         <outlet property="userLocations" destination="T18-dR-vsv" id="CM4-f9-ZCH"/>
+                        <segue destination="4m5-dH-j9m" kind="modal" identifier="goToPlayPage" id="RvJ-xy-eIe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -72,20 +52,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dWg-q1-29z">
-                                <rect key="frame" x="79" y="84" width="162" height="21"/>
+                                <rect key="frame" x="74" y="79" width="162" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="DMz-Mp-Ngb">
-                                <rect key="frame" x="98" y="220" width="125" height="102"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="DMz-Mp-Ngb">
+                                <rect key="frame" x="91" y="207" width="139" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="?">
+                                <state key="normal" title="?" image="play.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="pause:" destination="4m5-dH-j9m" eventType="touchUpInside" id="6VO-bt-mhJ"/>
+                                    <action selector="pauseOrPlay:" destination="4m5-dH-j9m" eventType="touchUpInside" id="IcQ-e1-rIS"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -99,17 +79,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Sqt-YZ-HhL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="771" y="202"/>
-        </scene>
-        <!--AV Player View Controller-->
-        <scene sceneID="lfD-L7-t6s">
-            <objects>
-                <avPlayerViewController videoGravity="AVLayerVideoGravityResizeAspect" id="RjQ-Wg-SQh" customClass="playerVC" customModule="MASSIVE" customModuleProvider="target" sceneMemberID="viewController">
-                    <navigationItem key="navigationItem" id="Hay-VS-fq3"/>
-                </avPlayerViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RsA-0w-3Bm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="963" y="-321"/>
+            <point key="canvasLocation" x="844" y="-303"/>
         </scene>
         <!--Second-->
         <scene sceneID="wg7-f3-ORb">
@@ -141,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="400" y="340.80000000000001"/>
+            <point key="canvasLocation" x="352" y="340"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -165,6 +135,7 @@
     </scenes>
     <resources>
         <image name="first" width="30" height="30"/>
+        <image name="play.png" width="128" height="128"/>
         <image name="second" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -172,7 +143,4 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="WJo-GF-FKa"/>
-    </inferredMetricsTieBreakers>
 </document>
