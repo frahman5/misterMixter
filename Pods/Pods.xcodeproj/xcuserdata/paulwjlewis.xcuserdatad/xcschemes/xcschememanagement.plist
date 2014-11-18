@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>Pods-CocoaSoundCloudAPI.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-CocoaSoundCloudUI.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-NXOAuth2Client.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-OHAttributedLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>247A3F315268058D1DEDE585</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>2642DCA0F5A14A1AD9928692</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5582C37CE233FB188C515A9E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>596FAFFD51A0FCAB99F86EEB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFACCA0DA50160305BCF4403</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>
