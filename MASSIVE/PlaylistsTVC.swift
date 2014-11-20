@@ -56,7 +56,7 @@ class PlaylistsTVC: UITableViewController {
         let playlist = self.playlistArray[indexPath.row] as NSDictionary
         
         // label the cell
-        cell!.textLabel!.text = playlist.objectForKey("title") as NSString
+        cell!.textLabel.text = playlist.objectForKey("title") as NSString
         
         return cell!
     }

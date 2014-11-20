@@ -27,8 +27,8 @@ class PlayPageViewController: UIViewController {
     }
     
     // play and pause button images
-    let pauseImage: UIImage = UIImage(named: "pause.png")
-    let playImage: UIImage = UIImage(named: "play.png")
+    let pauseImage: UIImage! = UIImage(named: "pause.png")
+    let playImage: UIImage! = UIImage(named: "play.png")
     
     @IBOutlet var playPauseButton: UIButton!
     
@@ -70,6 +70,22 @@ class PlayPageViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
+    
+    
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        super.viewDidAppear(animated)
+        
+        let firstActivityItem = "Testing...mister Mixter :)"
+        
+        let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [firstActivityItem], applicationActivities: nil)
+        
+        self.presentViewController(activityViewController, animated: true, completion: nil)
+        
+    }
+    
+    
 
     func setSongInfo(notification: NSNotification) {
         /*
