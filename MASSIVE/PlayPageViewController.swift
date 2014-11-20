@@ -26,6 +26,9 @@ class PlayPageViewController: UIViewController {
         self.scHandler.previousSong()
     }
     
+    
+    
+    
     // play and pause button images
     let pauseImage: UIImage! = UIImage(named: "pause.png")
     let playImage: UIImage! = UIImage(named: "play.png")
