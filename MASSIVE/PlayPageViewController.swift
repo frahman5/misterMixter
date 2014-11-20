@@ -8,6 +8,8 @@
 
 import UIKit
 import AVKit
+import Social
+
 
 class PlayPageViewController: UIViewController {
     
@@ -25,7 +27,6 @@ class PlayPageViewController: UIViewController {
     @IBAction func previousSong(sender: AnyObject) {
         self.scHandler.previousSong()
     }
-    
     
     
     
@@ -92,9 +93,54 @@ class PlayPageViewController: UIViewController {
         
         }
     
+    
+    
+    @IBAction func facebookShare(sender: AnyObject) {
         
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
+        
+            var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+
+            
+            facebookSheet.setInitialText("Check out this track on misterMixter...")
+            
+            self.presentViewController(facebookSheet, animated: true, completion: nil)
+            
+        } else {
+            
+            
+            var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+        }
+    
+    }
+    
         
     
+    @IBAction func twitterShare(sender: AnyObject) {
+        
+        if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
+                
+            var tweetSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                
+            tweetSheet.setInitialText("Check out this track on misterMixter...")
+            
+            self.presentViewController(tweetSheet, animated: true, completion: nil)
+                
+            } else {
+            
+            var alert = UIAlertController(title: "Accounts", message: "Please login to a Twitter account to share.", preferredStyle: UIAlertControllerStyle.Alert)
+                
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                
+            self.presentViewController(alert, animated: true, completion: nil)
+                
+        }
+    }
     
     
 
