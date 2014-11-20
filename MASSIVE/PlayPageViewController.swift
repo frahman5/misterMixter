@@ -72,7 +72,6 @@ class PlayPageViewController: UIViewController {
         
         super.viewDidLoad()
         
-        self.playPauseButton.alpha = 0
         
         // Do any additional setup after loading the view.
     }
@@ -89,11 +88,8 @@ class PlayPageViewController: UIViewController {
         
         self.presentViewController(activityViewController, animated: true, completion: nil)
         
-            super.viewDidAppear(animated)
-            UIView.animateWithDuration(3.0, animations: {
-                self.playPauseButton.alpha = 1.0
     
-            })
+        
         }
     
         
