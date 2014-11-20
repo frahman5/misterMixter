@@ -24,6 +24,7 @@
 		75A8835B1A036F9A00D8E3F0 /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 75A8835A1A036F9A00D8E3F0 /* pause.png */; };
 		75ABBF7D1A0974D300C59FBA /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 75ABBF7C1A0974D300C59FBA /* AVKit.framework */; };
 		75C009451A0D777500D8CA49 /* PlaylistsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */; };
+		75C376321A1BFCCE00B9C544 /* LogoBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = 75C376311A1BFCCE00B9C544 /* LogoBlue.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		75A8835A1A036F9A00D8E3F0 /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
 		75ABBF7C1A0974D300C59FBA /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsTVC.swift; sourceTree = "<group>"; };
+		75C376311A1BFCCE00B9C544 /* LogoBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoBlue.png; sourceTree = "<group>"; };
 		8660081DD1A7899E672F72EB /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		9E799D83537592F39A4DB79E /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +133,7 @@
 				75DD78CE1A0BBA2400ED8911 /* Models */,
 				75A883581A036F8400D8E3F0 /* play.png */,
 				75A8835A1A036F9A00D8E3F0 /* pause.png */,
+				75C376311A1BFCCE00B9C544 /* LogoBlue.png */,
 				757A5E381A02EFF700AD1DF6 /* AppDelegate.swift */,
 				75A883551A0363D400D8E3F0 /* Main.storyboard */,
 				757A5E411A02EFF700AD1DF6 /* Images.xcassets */,
@@ -270,6 +273,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				75C376321A1BFCCE00B9C544 /* LogoBlue.png in Resources */,
 				75A883571A0363D400D8E3F0 /* Main.storyboard in Resources */,
 				75A883591A036F8400D8E3F0 /* play.png in Resources */,
 				756A9EFB1A12C61F00934F5E /* playlistStructure.txt in Resources */,

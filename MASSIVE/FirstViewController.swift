@@ -10,9 +10,10 @@ import UIKit
 import CoreLocation
 
 class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
-    
+
     // Scroll-y view for user locations and the associated data structures
-    @IBOutlet var userLocations: UIPickerView!
+    let userLocations = UIPickerView()
+//    @IBOutlet var userLocations: UIPickerView!
     var userLocationsArray: Array<String>!
     var foundLocation: Bool?
     
@@ -33,8 +34,13 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     let playController = PlayPageViewController()
     
+    // dimensionality info
+    let iphoneFiveDim = [1136, 640] // height, width in pixels
+    
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+        
+        
         
     }
     
@@ -46,6 +52,21 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 //            self.findMyLocation()
 //        }
         
+        
+        // Put a background image in top of the screen
+        let frame = self.view.frame
+        var backgroundImage = UIImage(named: "LogoBlue.png")
+        var backgroundImageView = UIImageView(image: backgroundImage)
+        let imageHeight = (2/5) * CGRectGetHeight(frame)
+        backgroundImageView.frame = CGRectMake(0, 20, CGRectGetWidth(frame), imageHeight)
+        self.view.addSubview(backgroundImageView)
+//
+        // put a pickerview on the background image
+//        self.view.addSubview(self.userLocations)
+        self.userLocations.frame = CGRectMake(0, 0, CGRectGetWidth(frame), imageHeight)
+        self.view.addSubview(self.userLocations)
+//        backgroundImageView.addSubview(self.userLocations)
+//        backgroundImageView.bringSubviewToFront(self.userLocations)
         // Populate UIPickerView (Make this less fake later)
         self.userLocationsArray = ["Cornell Tech", "Chelsea", "New York"]
         self.userLocations.dataSource = self
@@ -112,7 +133,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         self.listener.removeObserver(self, name: "foundPlaylists", object: nil)
         
         // Place tableView of playlists up
-        let playlistViewBounds = CGRectMake(0, 268, 320, 251)
+        let frame = self.view.frame
+        let playlistHeight = (3/5) * CGRectGetHeight(frame)
+        let playlistViewBounds = CGRectMake(0, 268, 320, playlistHeight - 20)
         self.playlistTVC.view.frame = playlistViewBounds
         self.playlistTVC.items = playlists
         self.playlistTVC.location = location
@@ -152,8 +175,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
                     self.userLocationsArray = [pm.name, pm.subLocality, pm.subAdministrativeArea]
                     
                     // connect the data
-                    self.userLocations.dataSource = self
-                    self.userLocations.delegate = self
+//                    self.userLocations.dataSource = self
+//                    self.userLocations.delegate = self
                 } else {
                     println("Problem with the data received from geocoder")
                 }
@@ -184,6 +207,16 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         return userLocationsArray[row]
     }
     
+    func pickerView(pickerView: UIPickerView,
+        attributedTitleForRow row: Int,
+        forComponent component: Int) -> NSAttributedString? {
+        let attrs = [NSForegroundColorAttributeName: UIColor(white: 1, alpha: 1)]
+        let startString = userLocationsArray[row]
+        var attributedString = NSAttributedString(string: startString, attributes: attrs)
+            
+        return attributedString
+    }
+    
     // What to do when a row on the picker view gets selected
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int,
         inComponent component: Int) {
@@ -195,6 +228,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
         // tell it to reload its rows
         self.playlistTVC.tableView.reloadData()
+            
+        // change the background image
+
             
     }
     

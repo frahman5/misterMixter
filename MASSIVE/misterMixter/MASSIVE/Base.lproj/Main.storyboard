@@ -19,16 +19,11 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" id="T18-dR-vsv">
-                                <rect key="frame" x="-146" y="84" width="600" height="176"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                     <connections>
-                        <outlet property="userLocations" destination="T18-dR-vsv" id="CM4-f9-ZCH"/>
                         <segue destination="4m5-dH-j9m" kind="modal" identifier="goToPlayPage" id="RvJ-xy-eIe"/>
                     </connections>
                 </viewController>
