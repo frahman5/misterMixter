@@ -36,6 +36,7 @@ class PlayPageViewController: UIViewController {
     
     @IBOutlet var playPauseButton: UIButton!
     
+    
     @IBAction func pauseOrPlay(sender: AnyObject) {
         
         // What to do if its currently playing
@@ -73,7 +74,6 @@ class PlayPageViewController: UIViewController {
         
         super.viewDidLoad()
         
-        
         // Do any additional setup after loading the view.
     }
     
@@ -89,8 +89,6 @@ class PlayPageViewController: UIViewController {
         
         self.presentViewController(activityViewController, animated: true, completion: nil)
         
-    
-        
         }
     
     
@@ -100,14 +98,12 @@ class PlayPageViewController: UIViewController {
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
         
             var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-
             
             facebookSheet.setInitialText("Check out this track on misterMixter...")
             
             self.presentViewController(facebookSheet, animated: true, completion: nil)
             
         } else {
-            
             
             var alert = UIAlertController(title: "Accounts", message: "Please login to a Facebook account to share.", preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -116,7 +112,6 @@ class PlayPageViewController: UIViewController {
             self.presentViewController(alert, animated: true, completion: nil)
             
         }
-    
     }
     
         
@@ -153,7 +148,6 @@ class PlayPageViewController: UIViewController {
         
         // change the playPauseButton to indicate pausing
         self.playPauseButton.setImage(self.pauseImage, forState: UIControlState.Normal)
-        
         
     }
     override func didReceiveMemoryWarning() {
