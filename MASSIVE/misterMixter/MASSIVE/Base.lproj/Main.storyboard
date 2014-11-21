@@ -74,9 +74,9 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="D9f-xc-iDI">
-                                <rect key="frame" x="264" y="446" width="40" height="40"/>
+                                <rect key="frame" x="255" y="442" width="58" height="47"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="twit">
+                                <state key="normal" image="twitter_50.png">
                                     <color key="titleColor" red="0.40000000600000002" green="0.80000001190000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -183,6 +183,7 @@
         <image name="first" width="30" height="30"/>
         <image name="play.png" width="128" height="128"/>
         <image name="second" width="30" height="30"/>
+        <image name="twitter_50.png" width="58" height="47"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
