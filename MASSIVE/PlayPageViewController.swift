@@ -95,7 +95,7 @@ class PlayPageViewController: UIViewController {
     @IBAction func shareAction(sender: AnyObject) {
         
             
-            let firstActivityItem = "TCheck out this track on misterMixter... "
+            let firstActivityItem = "TCheck out this track on misterMixter...   "
             var uri = self.playlistInfo!.objectForKey("uri") as NSString!
             let secondActivityItem = firstActivityItem + uri
             
@@ -114,7 +114,7 @@ class PlayPageViewController: UIViewController {
         
             var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
             
-            facebookSheet.setInitialText("Download misterMixter app NOW & like us on Fabebook")
+            facebookSheet.setInitialText("Download misterMixter app NOW & like us on Fabebook :)")
             
             self.presentViewController(facebookSheet, animated: true, completion: nil)
             
@@ -138,7 +138,7 @@ class PlayPageViewController: UIViewController {
                 
             var tweetSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
                 
-            tweetSheet.setInitialText("Download misterMixter app NOW & follow us on Twitter")
+            tweetSheet.setInitialText("Download misterMixter app NOW & follow us on Twitter :)")
             
             self.presentViewController(tweetSheet, animated: true, completion: nil)
                 

@@ -190,10 +190,10 @@
 		75DD78CF1A0BBA4A00ED8911 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				757A5E3C1A02EFF700AD1DF6 /* SecondViewController.swift */,
-				75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */,
 				757A5E3A1A02EFF700AD1DF6 /* FirstViewController.swift */,
 				75A883531A035A8700D8E3F0 /* PlayPageViewController.swift */,
+				75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */,
+				757A5E3C1A02EFF700AD1DF6 /* SecondViewController.swift */,
 				756A9EF91A12C61F00934F5E /* playlistStructure.txt */,
 				756A9EFA1A12C61F00934F5E /* TemplateIcon2x.png */,
 			);
