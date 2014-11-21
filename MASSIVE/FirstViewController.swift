@@ -40,8 +40,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
-        
-        
     }
     
     override func viewDidLoad() {
@@ -58,6 +56,8 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         var backgroundImage = UIImage(named: "mixter_60.png")
         var backgroundImageView = UIImageView(image: backgroundImage)
         let imageHeight = (1/2) * CGRectGetHeight(frame)
+//        let imageWidth = (1/2) * CGRectGetWidth(frame)
+        
         backgroundImageView.frame = CGRectMake(0, 20, CGRectGetWidth(frame), imageHeight)
         self.view.addSubview(backgroundImageView)
 //

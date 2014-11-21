@@ -24,7 +24,7 @@
                     </view>
                     <tabBarItem key="tabBarItem" title="First" image="first" id="acW-dT-cKf"/>
                     <connections>
-                        <segue destination="4m5-dH-j9m" kind="modal" identifier="goToPlayPage" modalTransitionStyle="partialCurl" id="RvJ-xy-eIe"/>
+                        <segue destination="4m5-dH-j9m" kind="modal" identifier="goToPlayPage" modalTransitionStyle="flipHorizontal" id="RvJ-xy-eIe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="W5J-7L-Pyd" sceneMemberID="firstResponder"/>
@@ -88,7 +88,11 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem systemItem="action" id="V4c-tk-Z7L"/>
+                                    <barButtonItem systemItem="action" id="V4c-tk-Z7L">
+                                        <connections>
+                                            <action selector="shareAction:" destination="4m5-dH-j9m" id="mOo-y0-iRU"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Ue1-Km-tCy"/>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="gdJ-iQ-sCN"/>
                                     <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="BI7-CY-AJp"/>

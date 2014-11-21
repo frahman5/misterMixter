@@ -74,32 +74,37 @@ class PlayPageViewController: UIViewController {
         
         super.viewDidLoad()
         
-        // Initiates screen fadeing.
+        // Initiates segue fading
         self.playPauseButton.alpha = 0
         
         // Do any additional setup after loading the view.
     }
+  
     
-    
+// fade segue function
+    override func viewDidAppear(animated: Bool) {
+        
+        UIView.animateWithDuration(5.0, animations: {
+            self.playPauseButton.alpha = 1.0
+        })
+    }
     
     
     
 // 'Action' share button
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    @IBAction func shareAction(sender: AnyObject) {
         
-        let firstActivityItem = "Testing...mister Mixter :)"
-        
-        let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [firstActivityItem], applicationActivities: nil)
-        
-        self.presentViewController(activityViewController, animated: true, completion: nil)
-        
-        
-        UIView.animateWithDuration(3.0, animations: {
-            self.playPauseButton.alpha = 1.0
-        })
-        
+            
+            let firstActivityItem = "TCheck out this track on misterMixter... "
+            var uri = self.playlistInfo!.objectForKey("uri") as NSString!
+            let secondActivityItem = firstActivityItem + uri
+            
+            let activityViewController : UIActivityViewController = UIActivityViewController(activityItems: [secondActivityItem], applicationActivities: nil)
+            
+            self.presentViewController(activityViewController, animated: true, completion: nil)
+            
     }
+
     
 
 //  facebook share function
@@ -109,7 +114,7 @@ class PlayPageViewController: UIViewController {
         
             var facebookSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
             
-            facebookSheet.setInitialText("Check out this track on misterMixter...")
+            facebookSheet.setInitialText("Download misterMixter app NOW & like us on Fabebook")
             
             self.presentViewController(facebookSheet, animated: true, completion: nil)
             
@@ -133,7 +138,7 @@ class PlayPageViewController: UIViewController {
                 
             var tweetSheet:SLComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
                 
-            tweetSheet.setInitialText("Check out this track on misterMixter...")
+            tweetSheet.setInitialText("Download misterMixter app NOW & follow us on Twitter")
             
             self.presentViewController(tweetSheet, animated: true, completion: nil)
                 
