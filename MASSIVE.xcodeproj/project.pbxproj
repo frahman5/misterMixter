@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14856CEF1A1ECBAA00198AC1 /* twitter_40.png in Resources */ = {isa = PBXBuildFile; fileRef = 14856CEE1A1ECBAA00198AC1 /* twitter_40.png */; };
+		14C039371A1EBC8600DCC04D /* mixter_60.png in Resources */ = {isa = PBXBuildFile; fileRef = 14C039361A1EBC8600DCC04D /* mixter_60.png */; };
+		14C039391A1EC03700DCC04D /* fb_50.png in Resources */ = {isa = PBXBuildFile; fileRef = 14C039381A1EC03700DCC04D /* fb_50.png */; };
 		66383A758C8DA5462178D197 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8660081DD1A7899E672F72EB /* libPods.a */; };
 		756A9EFB1A12C61F00934F5E /* playlistStructure.txt in Resources */ = {isa = PBXBuildFile; fileRef = 756A9EF91A12C61F00934F5E /* playlistStructure.txt */; };
 		756A9EFC1A12C61F00934F5E /* TemplateIcon2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 756A9EFA1A12C61F00934F5E /* TemplateIcon2x.png */; };
@@ -38,6 +41,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14856CEE1A1ECBAA00198AC1 /* twitter_40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = twitter_40.png; sourceTree = "<group>"; };
+		14C039361A1EBC8600DCC04D /* mixter_60.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mixter_60.png; sourceTree = "<group>"; };
+		14C039381A1EC03700DCC04D /* fb_50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fb_50.png; sourceTree = "<group>"; };
 		25196A2432F8CF712CC9CB85 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		756A9EF91A12C61F00934F5E /* playlistStructure.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playlistStructure.txt; sourceTree = "<group>"; };
 		756A9EFA1A12C61F00934F5E /* TemplateIcon2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TemplateIcon2x.png; sourceTree = "<group>"; };
@@ -134,6 +140,9 @@
 				75A883581A036F8400D8E3F0 /* play.png */,
 				75A8835A1A036F9A00D8E3F0 /* pause.png */,
 				75C376311A1BFCCE00B9C544 /* LogoBlue.png */,
+				14856CEE1A1ECBAA00198AC1 /* twitter_40.png */,
+				14C039381A1EC03700DCC04D /* fb_50.png */,
+				14C039361A1EBC8600DCC04D /* mixter_60.png */,
 				757A5E381A02EFF700AD1DF6 /* AppDelegate.swift */,
 				75A883551A0363D400D8E3F0 /* Main.storyboard */,
 				757A5E411A02EFF700AD1DF6 /* Images.xcassets */,
@@ -274,11 +283,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14856CEF1A1ECBAA00198AC1 /* twitter_40.png in Resources */,
 				75C376321A1BFCCE00B9C544 /* LogoBlue.png in Resources */,
 				75A883571A0363D400D8E3F0 /* Main.storyboard in Resources */,
+				14C039391A1EC03700DCC04D /* fb_50.png in Resources */,
 				75A883591A036F8400D8E3F0 /* play.png in Resources */,
 				756A9EFB1A12C61F00934F5E /* playlistStructure.txt in Resources */,
 				75A8835B1A036F9A00D8E3F0 /* pause.png in Resources */,
+				14C039371A1EBC8600DCC04D /* mixter_60.png in Resources */,
 				757A5E451A02EFF700AD1DF6 /* LaunchScreen.xib in Resources */,
 				757A5E421A02EFF700AD1DF6 /* Images.xcassets in Resources */,
 				756A9EFC1A12C61F00934F5E /* TemplateIcon2x.png in Resources */,

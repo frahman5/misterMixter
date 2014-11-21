@@ -55,9 +55,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
         // Put a background image in top of the screen
         let frame = self.view.frame
-        var backgroundImage = UIImage(named: "LogoBlue.png")
+        var backgroundImage = UIImage(named: "mixter_60.png")
         var backgroundImageView = UIImageView(image: backgroundImage)
-        let imageHeight = (2/5) * CGRectGetHeight(frame)
+        let imageHeight = (1/2) * CGRectGetHeight(frame)
         backgroundImageView.frame = CGRectMake(0, 20, CGRectGetWidth(frame), imageHeight)
         self.view.addSubview(backgroundImageView)
 //

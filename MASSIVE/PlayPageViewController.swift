@@ -74,13 +74,18 @@ class PlayPageViewController: UIViewController {
         
         super.viewDidLoad()
         
+        // Initiates screen fadeing.
+        self.playPauseButton.alpha = 0
+        
         // Do any additional setup after loading the view.
     }
     
     
     
+    
+    
+// 'Action' share button
     override func viewDidAppear(animated: Bool) {
-        
         super.viewDidAppear(animated)
         
         let firstActivityItem = "Testing...mister Mixter :)"
@@ -89,10 +94,15 @@ class PlayPageViewController: UIViewController {
         
         self.presentViewController(activityViewController, animated: true, completion: nil)
         
-        }
+        
+        UIView.animateWithDuration(3.0, animations: {
+            self.playPauseButton.alpha = 1.0
+        })
+        
+    }
     
-    
-    
+
+//  facebook share function
     @IBAction func facebookShare(sender: AnyObject) {
         
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook){
@@ -115,7 +125,8 @@ class PlayPageViewController: UIViewController {
     }
     
         
-    
+
+// twitter share funtion
     @IBAction func twitterShare(sender: AnyObject) {
         
         if SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter){
