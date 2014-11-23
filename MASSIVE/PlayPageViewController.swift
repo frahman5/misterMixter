@@ -95,7 +95,7 @@ class PlayPageViewController: UIViewController {
     @IBAction func shareAction(sender: AnyObject) {
         
             
-            let firstActivityItem = "TCheck out this track on misterMixter...   "
+            let firstActivityItem = "Check out this track on @mister_Mixter...   "
             var uri = self.playlistInfo!.objectForKey("uri") as NSString!
             let secondActivityItem = firstActivityItem + uri
             

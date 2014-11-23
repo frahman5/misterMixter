@@ -25,6 +25,9 @@ class PlaylistsTVC: UITableViewController {
     
     override func viewDidLoad() {
         
+        let backgroundImage = UIImage(named: "LogoBlue.png")
+        self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
+        
         // tells the tableView what class of UITableViewCell to create if theres none on 
         // the reuse queue, and what identifier to give it.
         self.tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
@@ -57,6 +60,8 @@ class PlaylistsTVC: UITableViewController {
         
         // label the cell
         cell!.textLabel.text = playlist.objectForKey("title") as NSString
+        cell!.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
+        cell!.textLabel.textColor = UIColor(white: 1.0, alpha: 1.0)
         
         return cell!
     }
