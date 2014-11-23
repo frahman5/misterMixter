@@ -23,6 +23,13 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
+                                    <barButtonItem systemItem="action" id="ciC-yx-mep"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="NgL-ib-3zu"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="g5v-CM-SiA"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Xx9-Fn-LDX"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="XDH-wr-dkb"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="ZPD-xn-SJM"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="3C0-nP-Bwj"/>
                                     <barButtonItem systemItem="refresh" id="F6Z-ZG-SjC">
                                         <connections>
                                             <segue destination="Y6v-Tm-d3m" kind="modal" modalTransitionStyle="flipHorizontal" id="8NV-NY-ucS"/>
@@ -167,6 +174,13 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
+                                    <barButtonItem systemItem="action" id="KSy-JY-Oqw"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="ygB-4w-KYj"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Obb-2s-GAR"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="TIU-ic-1Hc"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="gcs-pj-hOp"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="kmY-ng-kvt"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="OQv-da-U1t"/>
                                     <barButtonItem systemItem="refresh" id="1ik-bi-XVd">
                                         <connections>
                                             <segue destination="Y6v-Tm-d3m" kind="modal" modalTransitionStyle="flipHorizontal" id="N0n-3p-yWb"/>
@@ -212,6 +226,13 @@
                                 <rect key="frame" x="0.0" y="524" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
+                                    <barButtonItem systemItem="action" id="RU7-kO-sR4"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="b1b-Gc-62Y"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="nQt-rN-aXS"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="RyX-vS-NZA"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Tbx-8I-FiF"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="Mtr-XE-BHS"/>
+                                    <barButtonItem width="42" style="plain" systemItem="fixedSpace" id="P5Q-ZO-lzi"/>
                                     <barButtonItem systemItem="refresh" id="9F2-tY-rOS">
                                         <connections>
                                             <segue destination="Y6v-Tm-d3m" kind="modal" modalTransitionStyle="flipHorizontal" id="AC9-gi-ZzY"/>
@@ -324,13 +345,14 @@
         <!--View Controller-->
         <scene sceneID="4GY-pR-ZiW">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="op0-fb-05Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="Y6v-Tm-d3m" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Si-yg-0Iz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="qOv-aX-rfw">
-                                <rect key="frame" x="130" y="166" width="60" height="30"/>
+                                <rect key="frame" x="132" y="344" width="60" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Discover">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -339,18 +361,8 @@
                                     <segue destination="9pv-A4-QxB" kind="modal" modalTransitionStyle="partialCurl" id="lvW-2C-0eX"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiW-wc-SlN">
-                                <rect key="frame" x="137" y="407" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Curate">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="CYA-yX-nlP" kind="modal" modalTransitionStyle="partialCurl" id="I42-de-VcO"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="oz1-7J-yBj">
-                                <rect key="frame" x="139" y="288" width="42" height="30"/>
+                                <rect key="frame" x="139" y="407" width="42" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Listen">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -359,16 +371,30 @@
                                     <segue destination="8rJ-Kc-sve" kind="modal" modalTransitionStyle="partialCurl" id="uTT-w0-qoa"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Launch" id="Tde-Lz-JcH">
+                                <rect key="frame" x="42" y="62" width="240" height="232"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="RiW-wc-SlN">
+                                <rect key="frame" x="137" y="474" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Curate">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="CYA-yX-nlP" kind="modal" modalTransitionStyle="partialCurl" id="I42-de-VcO"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.25098040700000002" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="op0-fb-05Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1209" y="917"/>
+            <point key="canvasLocation" x="-1841" y="808"/>
         </scene>
     </scenes>
     <resources>
+        <image name="Launch" width="256" height="256"/>
         <image name="fb_50.png" width="50" height="50"/>
         <image name="first" width="30" height="30"/>
         <image name="play.png" width="128" height="128"/>
@@ -382,8 +408,8 @@
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="I42-de-VcO"/>
-        <segue reference="8NV-NY-ucS"/>
-        <segue reference="lvW-2C-0eX"/>
+        <segue reference="AC9-gi-ZzY"/>
         <segue reference="uTT-w0-qoa"/>
+        <segue reference="lvW-2C-0eX"/>
     </inferredMetricsTieBreakers>
 </document>
