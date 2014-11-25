@@ -322,6 +322,7 @@
             NSAssert(self.accessToken, @"self.accessToken is nil!");
             
             // tell the firstViewController that we have the access token
+            NSLog(@"got access token");
             [[NSNotificationCenter defaultCenter] postNotificationName:@"accessToken"
                                                                 object:self
                                                               userInfo:nil];

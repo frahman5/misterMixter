@@ -13,9 +13,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 
     // Scroll-y view for user locations and the associated data structures
     let userLocations = UIPickerView()
-//    @IBOutlet var userLocations: UIPickerView!
     var userLocationsArray: Array<String>!
-    var foundLocation: Bool?
     
     // location manager to find user location
     let locationManager = CLLocationManager()
@@ -31,11 +29,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     // Things the PlayPageViewController will need
     var playlistInfo: NSDictionary!
-    
     let playController = PlayPageViewController()
     
-    // dimensionality info
-    let iphoneFiveDim = [1136, 640] // height, width in pixels
+    
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -44,46 +40,97 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
     
     override func viewDidLoad() {
         
-        // Ask for location permission and once received, determine location
-//        while (self.foundLocation == nil) {
-//            locationManager.requestWhenInUseAuthorization()
-//            self.findMyLocation()
-//        }
-        
         
         // Put a background image in top of the screen
         let frame = self.view.frame
         var backgroundImage = UIImage(named: "mixter_60.png")
         var backgroundImageView = UIImageView(image: backgroundImage)
         let imageHeight = (1/2) * CGRectGetHeight(frame)
-//        let imageWidth = (1/2) * CGRectGetWidth(frame)
-        
         backgroundImageView.frame = CGRectMake(0, 20, CGRectGetWidth(frame), imageHeight)
         self.view.addSubview(backgroundImageView)
-//
+
         // put a pickerview on the background image
-//        self.view.addSubview(self.userLocations)
         self.userLocations.frame = CGRectMake(0, 0, CGRectGetWidth(frame), imageHeight)
         self.view.addSubview(self.userLocations)
-//        backgroundImageView.addSubview(self.userLocations)
-//        backgroundImageView.bringSubviewToFront(self.userLocations)
-        // Populate UIPickerView (Make this less fake later)
-        self.userLocationsArray = ["Cornell Tech", "Chelsea", "New York"]
-        self.userLocations.dataSource = self
-        self.userLocations.delegate = self
         
         // Configure a PlayPageViewController for later
         self.playController.scHandler = self.scHandler
         self.scHandler.ppvC = self.playController as PlayPageViewController
         
-        // When we get the access token, find playlists and populate the table
-        self.listener.addObserver(self, selector: "searchPlaylists:", name: "accessToken", object: nil)
+        // When we get the access token, wait for access token then find playlists and populate the table
+        self.listener.addObserver(self, selector: "waitForLocationBeforeSearchingPlaylists:", name: "accessToken", object: nil)
         
         // When we've retrieved playlist metadata, play the playlist and change screens
         self.listener.addObserver(self, selector: "playThisPlaylist:", name: "playPlaylist", object: nil)
         
         super.viewDidLoad()
         
+    }
+    
+    func findMyLocation() {
+        
+        //        // If the user hasn't given us permission yet, don't run location services
+        //        if (CLLocationManager.authorizationStatus() != CLAuthorizationStatus.AuthorizedWhenInUse) {
+        //            println("user hasn't given us permission")
+        //            return
+        //        }
+        
+        // set location manager parameters and look for location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.startUpdatingLocation()
+        
+        // take the lat/long data and turn it into city/state/POI
+        let geoCoder = CLGeocoder()
+        geoCoder.reverseGeocodeLocation(locationManager.location,
+            completionHandler: { (placemarks, error) -> Void in
+                
+                // handle error if need be
+                if (error != nil) {
+                    println("Geocoder failed with error code" + error.localizedDescription)
+                    return
+                }
+                
+                // report the placemark. IN FUTURE SHOULD HANDLE MULTIPLE ENTRIES
+                if (placemarks.count > 0) {
+                    let pm = placemarks[0] as CLPlacemark
+                    
+                    // initalize the data
+                    println("successfully reverse geocded location")
+                    self.userLocationsArray = [pm.name, pm.subLocality, pm.subAdministrativeArea]
+                    
+                    // connect the data
+                    self.userLocations.dataSource = self
+                    self.userLocations.delegate = self
+                    
+                    // post a notification that we've found location
+                    println("foundLocation")
+                    self.listener.postNotificationName("foundLocation", object: nil)
+                    
+                    
+                    
+                } else {
+                    println("Problem with the data received from geocoder")
+                }
+        })
+        
+        
+    }
+
+    func waitForLocationBeforeSearchingPlaylists(notification: NSNotification) {
+        /* Once the scHandler has retrieved our soundcloud access token, 
+           start looking for the notifcation that we've found user location. 
+           Once we find user location, tell scHandler to get playlists */
+        
+        // stop listening for the access token notification
+        self.listener.removeObserver(self, name: "accessToken", object: nil)
+        
+        // start listening for the locationsFound notification
+        self.listener.addObserver(self, selector: "searchPlaylists:", name: "foundLocation", object: nil)
+        
+        // Ask for location permission. Then determine location
+        locationManager.requestWhenInUseAuthorization()
+        self.findMyLocation()
     }
     
     func playThisPlaylist(notification: NSNotification) {
@@ -106,16 +153,14 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 //        self.presentViewController(playController, animated: true, completion: nil)
     }
     
-    func searchPlaylists(notification: NSNotificationCenter) {
+    func searchPlaylists(notification: NSNotification) {
         /* Once the scHandler has retrieved our soundcloud access token, 
            tell it to get the playlists for our user's location */
         
         // Get the playlists
         self.scHandler.getPlaylists(self.userLocationsArray)
-        
-        // stop listening for that notification
-        self.listener.removeObserver(self, name: "accessToken", object: nil)
-        
+        println("We search for playlists")
+
         // start listening for a notification on having found the playlists
         self.listener.addObserver(self, selector: "populatePlaylists:", name: "foundPlaylists", object: nil)
         
@@ -141,52 +186,6 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         self.playlistTVC.location = location
         self.playlistTVC.setPlaylistArray()
         self.view.addSubview(self.playlistTVC.view)
-        
-    }
-    func findMyLocation() {
-        
-        // If the user hasn't given us permission yet, don't run location services
-        if (CLLocationManager.authorizationStatus() != CLAuthorizationStatus.AuthorizedWhenInUse) {
-            println("user hasn't given us permission")
-            return
-        }
-        
-        // set location manager parameters and look for location
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.startUpdatingLocation()
-        
-        // take the lat/long data and turn it into city/state/POI
-        let geoCoder = CLGeocoder()
-        geoCoder.reverseGeocodeLocation(locationManager.location,
-            completionHandler: { (placemarks, error) -> Void in
-                
-                // handle error if need be
-                if (error != nil) {
-                    println("Geocoder failed with error code" + error.localizedDescription)
-                    return
-                }
-                
-                // report the placemark. IN FUTURE SHOULD HANDLE MULTIPLE ENTRIES
-                if (placemarks.count > 0) {
-                    let pm = placemarks[0] as CLPlacemark
-                    
-                    // initalize the data
-                    self.userLocationsArray = [pm.name, pm.subLocality, pm.subAdministrativeArea]
-                    
-                    // connect the data
-//                    self.userLocations.dataSource = self
-//                    self.userLocations.delegate = self
-                } else {
-                    println("Problem with the data received from geocoder")
-                }
-        })
-        
-        // Indicate that we've found location
-        self.foundLocation = true
-        
-        // Fetch playlists
-//        self.scHandler.fetchPlaylistsForLocation("Location")
         
     }
     
