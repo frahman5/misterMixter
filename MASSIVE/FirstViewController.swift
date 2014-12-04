@@ -45,7 +45,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         let frame = self.view.frame
         var backgroundImage = UIImage(named: "mixter_60.png")
         var backgroundImageView = UIImageView(image: backgroundImage)
-        let imageHeight = (1/2) * CGRectGetHeight(frame)
+        let imageHeight = (2/5) * CGRectGetHeight(frame)
         backgroundImageView.frame = CGRectMake(0, 20, CGRectGetWidth(frame), imageHeight)
         self.view.addSubview(backgroundImageView)
 
@@ -97,7 +97,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
                     
                     // initalize the data
                     println("successfully reverse geocded location")
-                    self.userLocationsArray = [pm.name, pm.subLocality, pm.subAdministrativeArea]
+                    self.userLocationsArray = [pm.subLocality, pm.subAdministrativeArea]
                     
                     // connect the data
                     self.userLocations.dataSource = self
@@ -121,6 +121,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         /* Once the scHandler has retrieved our soundcloud access token, 
            start looking for the notifcation that we've found user location. 
            Once we find user location, tell scHandler to get playlists */
+        println("We start waiting for location before searching for playlists")
         
         // stop listening for the access token notification
         self.listener.removeObserver(self, name: "accessToken", object: nil)
@@ -179,8 +180,9 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         
         // Place tableView of playlists up
         let frame = self.view.frame
-        let playlistHeight = (3/5) * CGRectGetHeight(frame)
-        let playlistViewBounds = CGRectMake(0, 268, 320, playlistHeight - 20)
+//        let playlistHeight = (3/5) * CGRectGetHeight(frame)
+        let imageHeight = (2/5) * CGRectGetHeight(frame)
+        let playlistViewBounds = CGRectMake(0, imageHeight + 20, 320, CGRectGetHeight(frame) - imageHeight - 65)
         self.playlistTVC.view.frame = playlistViewBounds
         self.playlistTVC.items = playlists
         self.playlistTVC.location = location

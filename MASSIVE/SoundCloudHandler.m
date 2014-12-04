@@ -65,10 +65,20 @@
     
     // master soundcloud account
     self.masterUsername = @"yannis.tsampalis@live.com";
-    self.masterPassword = @"xesee3w";
+    self.masterPassword = @"xesemesa";
     
     // authenticate us baby
     [self authenticateMasterAccount];
+//    self.accessToken = [[NSUserDefaults standardUserDefaults] objectForKey:@"accessToken"];
+//    if (self.accessToken == nil) {
+//        NSLog(@"Got the access token by calling the api");
+//        [self authenticateMasterAccount];
+//    } else {
+//        NSLog(@"Got the access token from NSUserDefaults: %@", self.accessToken);
+//        [[NSNotificationCenter defaultCenter] postNotificationName:@"accessToken"
+//                                                            object:self
+//                                                          userInfo:nil];
+//    }
     
     // set up the dictionary where we hold playlists
     self.locationPlaylistDictionary = [[NSMutableDictionary alloc] init];
@@ -319,7 +329,12 @@
             
             // Set our access token baby
             self.accessToken = [(NSDictionary *)jsonResponse objectForKey:@"access_token"];
+            NSLog(@"%@", (NSDictionary *)jsonResponse);
             NSAssert(self.accessToken, @"self.accessToken is nil!");
+            
+            // store the accessToken in NSUserDefaults
+            [[NSUserDefaults standardUserDefaults] setObject:self.accessToken forKey:@"accessToken"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
             
             // tell the firstViewController that we have the access token
             NSLog(@"got access token");
