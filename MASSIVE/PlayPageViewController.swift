@@ -27,8 +27,8 @@ class PlayPageViewController: UIViewController {
     }
     
     // play and pause button images
-    let pauseImage: UIImage = UIImage(named: "pause.png")
-    let playImage: UIImage = UIImage(named: "play.png")
+    let pauseImage: UIImage! = UIImage(named: "pause.png")
+    let playImage: UIImage! = UIImage(named: "play.png")
     
     @IBOutlet var playPauseButton: UIButton!
     
@@ -47,6 +47,8 @@ class PlayPageViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
+        
         // set up a listener so we know when to change song Title
         self.listener.addObserver(self,
             selector: "setSongInfo:", name: "changeTrackInfo", object: nil)

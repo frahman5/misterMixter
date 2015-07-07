@@ -13,6 +13,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
 
     // Scroll-y view for user locations and the associated data structures
     let userLocations = UIPickerView()
+    
 //    @IBOutlet var userLocations: UIPickerView!
     var userLocationsArray: Array<String>!
     var foundLocation: Bool?
@@ -57,7 +58,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         let frame = self.view.frame
         var backgroundImage = UIImage(named: "LogoBlue.png")
         var backgroundImageView = UIImageView(image: backgroundImage)
-        let imageHeight = (2/5) * CGRectGetHeight(frame)
+        let imageHeight = (2/5) * CGRectGetHeight(frame) + 30
         backgroundImageView.frame = CGRectMake(0, 20, CGRectGetWidth(frame), imageHeight)
         self.view.addSubview(backgroundImageView)
 //
@@ -143,6 +144,7 @@ class FirstViewController: UIViewController, CLLocationManagerDelegate, UIPicker
         self.view.addSubview(self.playlistTVC.view)
         
     }
+    
     func findMyLocation() {
         
         // If the user hasn't given us permission yet, don't run location services

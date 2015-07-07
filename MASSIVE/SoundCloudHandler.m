@@ -64,8 +64,8 @@
 //    self.redirectURI = @"mrMixter://oauth";
     
     // master soundcloud account
-    self.masterUsername = @"yannis.tsampalis@live.com";
-    self.masterPassword = @"xesee3w";
+    self.masterUsername = @"faiyam@faiyamrahman.com";
+    self.masterPassword = @"fakepassword_1";
     
     // authenticate us baby
     [self authenticateMasterAccount];

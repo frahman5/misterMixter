@@ -39,7 +39,7 @@
 
 /* Begin PBXFileReference section */
 		25196A2432F8CF712CC9CB85 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
-		756A9EF91A12C61F00934F5E /* playlistStructure.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = playlistStructure.txt; sourceTree = "<group>"; };
+		756A9EF91A12C61F00934F5E /* playlistStructure.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = playlistStructure.txt; path = MASSIVE/playlistStructure.txt; sourceTree = "<group>"; };
 		756A9EFA1A12C61F00934F5E /* TemplateIcon2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TemplateIcon2x.png; sourceTree = "<group>"; };
 		757998391A0316390095A8FB /* MASSIVE-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MASSIVE-Bridging-Header.h"; sourceTree = "<group>"; };
 		7579983A1A03163A0095A8FB /* SoundCloudHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SoundCloudHandler.h; sourceTree = "<group>"; };
@@ -110,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				757A5E351A02EFF700AD1DF6 /* MASSIVE */,
+				756A9EF91A12C61F00934F5E /* playlistStructure.txt */,
 				757A5E4D1A02EFF700AD1DF6 /* MASSIVETests */,
 				757A5E341A02EFF700AD1DF6 /* Products */,
 				24E3603EE79125A3016B02FF /* Pods */,
@@ -185,7 +186,6 @@
 				75C009441A0D777500D8CA49 /* PlaylistsTVC.swift */,
 				757A5E3A1A02EFF700AD1DF6 /* FirstViewController.swift */,
 				75A883531A035A8700D8E3F0 /* PlayPageViewController.swift */,
-				756A9EF91A12C61F00934F5E /* playlistStructure.txt */,
 				756A9EFA1A12C61F00934F5E /* TemplateIcon2x.png */,
 			);
 			name = Controllers;

@@ -1,0 +1,6 @@
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CocoaSoundCloudAPI" "${PODS_ROOT}/Headers/Public/CocoaSoundCloudUI" "${PODS_ROOT}/Headers/Public/NXOAuth2Client" "${PODS_ROOT}/Headers/Public/OHAttributedLabel"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/CocoaSoundCloudAPI" -isystem "${PODS_ROOT}/Headers/Public/CocoaSoundCloudUI" -isystem "${PODS_ROOT}/Headers/Public/NXOAuth2Client" -isystem "${PODS_ROOT}/Headers/Public/OHAttributedLabel"
+OTHER_LDFLAGS = -ObjC -l"Pods-MASSIVETests-CocoaSoundCloudAPI" -l"Pods-MASSIVETests-CocoaSoundCloudUI" -l"Pods-MASSIVETests-NXOAuth2Client" -l"Pods-MASSIVETests-OHAttributedLabel" -framework "CoreLocation" -framework "CoreText" -framework "Security"
+OTHER_LIBTOOLFLAGS = $(OTHER_LDFLAGS)
+PODS_ROOT = ${SRCROOT}/Pods
